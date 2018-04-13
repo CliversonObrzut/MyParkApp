@@ -1,3 +1,30 @@
 page-welcome {
-
+    .myView {
+        background-image: url('../assets/imgs/welcome.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        filter: opacity(80%);
+      }
+    
+      #welcome {
+        h1 {
+          font-size: 52px;
+          color: #03a7e1;
+          margin-top: 50px;
+        }
+        .marginTop {
+          margin-top: 150px;
+          border-radius: 10px;
+          filter: opacity(80%);
+          border: 1px solid color($colors, white);
+        }
+        .logo {
+          height: 100px;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 50px;
+        }
+      }
 }
