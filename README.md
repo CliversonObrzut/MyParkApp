@@ -23,8 +23,8 @@ _Note: You may need to add “sudo” in front of any global commands to install
 ## Screen shot
 
 <img src="./src/assets/screens/welcome_screen.png" width="30%" alt="welcome_screen" >
-<img  src="./src/assets/screens/login_screen.png" width="30%" alt="login_screen">
-<img src="./src/assets/screens/forgotpassword_screen.png" width="30%" alt="forgotpassword_screen" >
+<img  src="./src/assets/screens/Login_screen.png" width="30%" alt="login_screen">
+<img src="./src/assets/screens/forgotPassword_Screen.png" width="30%" alt="forgotpassword_screen" >
 <img  src="./src/assets/screens/register_screen.png" width="30%" alt="register_screen">
 <img src="./src/assets/screens/search_screen.png" width="30%" alt="search_screen" >
 
