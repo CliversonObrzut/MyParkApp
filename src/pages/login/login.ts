@@ -21,7 +21,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  private _loginForm: FormGroup;
+  public _loginForm: FormGroup;
 
   constructor(
     public navCtrl: NavController, 
