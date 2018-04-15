@@ -1,14 +1,24 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-</ion-content>
+    <ion-navbar color="blue">
+      <ion-toolbar color="dark">
+        <ion-buttons start>
+          <button ion-button icon-only color="primary" (click)="doLogout()">
+            <ion-icon color="dark" name="log-out"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>Home</ion-title>
+      </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  
+  <ion-content class="card-background-page">
+    <ion-list>
+      <ion-card *ngFor="let facility of documents">
+        <div class="img">
+          <img [src]="facility.imageURL" (click)="testButton(facility)"/>
+          <div class="card-title" (click)="testButton(facility)">{{facility.name}}</div>
+        </div>
+      </ion-card>
+    </ion-list>
+  </ion-content>

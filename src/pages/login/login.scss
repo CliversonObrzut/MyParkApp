@@ -1,3 +1,36 @@
 page-login {
-
+    .login-optons {
+        text-decoration: none;
+        color: #fff8dc;
+      }
+      /* homescreen background image */
+      .background {
+        background: url('../assets/imgs/login-bench-blueNew.png') no-repeat center
+          center fixed;
+        filter: grayscale(50%);
+        // filter: opacity(80%);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+      }
+      .row {
+        display: flex;
+      }
+      .login {
+        border-radius: 10px;
+        border: 2px solid color($colors, white);
+      }
+      .column {
+        flex: 33.33%;
+        padding: 5px;
+      }
+      .item.item-input {
+        //background-color: transparent;
+        background: rgba(255, 255, 255, 0.7);
+      }
+      button {
+        background: none !important;
+        background-color: none !important;
+        box-shadow: none !important;
+      }
 }

@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastController } from 'ionic-angular';
 
 /*
   Generated class for the UtilsProvider provider.
@@ -10,8 +10,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UtilsProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello UtilsProvider Provider');
+  constructor(public toastCtrl: ToastController) { }
+
+  showToast(message: string, position?: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: position || 'bottom'
+    });
+
+    toast.present(toast);
   }
 
 }

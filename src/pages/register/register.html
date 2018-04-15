@@ -1,18 +1,34 @@
-<!--
-  Generated template for the RegisterPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>register</ion-title>
-  </ion-navbar>
-
+    <ion-navbar color="blue">
+      <ion-title>Register</ion-title>
+    </ion-navbar>
+  
 </ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+  
+  
+  <ion-content>
+  
+    <form [formGroup]="registerForm" (ngSubmit)="doRegister()">
+  
+      <ion-list>
+  
+        <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+  
+      </ion-list>
+  
+      <div padding>
+        <button ion-button color="primary" block type="submit" [disabled]="!registerForm.valid">Register</button>
+      </div>
+  
+    </form>
+  
+  </ion-content>

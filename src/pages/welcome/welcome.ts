@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
 import { LoginPage } from '../login/login';
+
 
 /**
  * Generated class for the WelcomePage page.
@@ -9,6 +11,7 @@ import { LoginPage } from '../login/login';
  * Ionic pages and navigation.
  */
 
+@IonicPage()
 @Component({
   selector: 'page-welcome',
   templateUrl: 'welcome.html',
