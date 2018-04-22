@@ -30,12 +30,16 @@ export class HomePage {
     private _preloader : PreloaderProvider) {
     }
 
-    ionViewCanEnter(){
+    ionViewDidLoad(){
       this._preloader.displayPreloader();
       this.getUserData();
       this.getFacilities();
       this.updateSelectedFacilitiesText();
       this._preloader.hidePreloader();
+    }
+    
+    ionViewCanEnter(){
+
     }
 
     // ionViewDidEnter() {
@@ -57,7 +61,7 @@ export class HomePage {
       this._dbService.getDocuments("Facilities")
       .then((data: any) => {
         if(data.length === 0) {
-          console.log(this.collection+" collection is empty");
+          console.log("Facilities collection is empty");
         }
         else {
           //this.documents = data;
@@ -95,7 +99,6 @@ export class HomePage {
       else {
         this.addToFilter(facility);
       }
-      console.log(this.facilitiesModel);
       console.log(this.filterList);
     }
 
