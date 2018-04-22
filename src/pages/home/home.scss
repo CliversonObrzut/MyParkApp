@@ -6,30 +6,30 @@ page-home {
           text-align: center;
           border-radius: 5px;
           border: 1px solid color($colors, white);
-        }
-        .img {
-          max-width: 800px;
-          height: 110px;
-        }
+          .img {
+            max-width: 800px;
+            height: 110px;
+          }
     
-        .card-title {
-          position: absolute;
-          top: 36%;
-          font-size: 2em;
-          width: 100%;
-          font-weight: bold;
-          color: #fff;
-        }
-    
-        .card-subtitle {
-          font-size: 1em;
-          position: absolute;
-          top: 52%;
-          width: 100%;
-          color: #fff;
-        }
-    
-        .background {
+          .card-title {
+            position: absolute;
+            top: 36%;
+            font-size: 2em;
+            width: 100%;
+            font-weight: bold;
+            color: #fff;
+          }
+      
+          .card-subtitle {
+            font-size: 1em;
+            position: absolute;
+            top: 52%;
+            width: 100%;
+            color: #fff;
+          }
+     
+        
+          .background {
           background-size: 100% auto;
           background-position: center;
     
@@ -50,5 +50,15 @@ page-home {
             }
           }
         }
+      }  
+      ion-card[data-status="true"] {
+        border: 1px solid color($colors, darkgreen);
+        .img {
+          opacity: 0.5;
+        }
+        .card-title {
+          color: darkgreen;
+        }
       }
+    }
 }

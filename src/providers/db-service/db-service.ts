@@ -5,9 +5,6 @@ import * as firebase from 'firebase';
 export class DbServiceProvider {
 
   private _db : any;
-  private facilities : string = "Facilities";
-  //private const parks : string = "Parks";
-
 
   constructor() {
     this._db = firebase.firestore();
@@ -17,26 +14,34 @@ export class DbServiceProvider {
     /*
    * Return documents from specific database collection
    */
-  getDocuments(collectionObj: string) : Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._db.collection(collectionObj).get()
-      .then((querySnapshot) => {        
-        let obj : any = [];
-        querySnapshot.forEach((doc: any) => {
-          if (collectionObj === this.facilities) {
-            obj.push({
-                id             : doc.id,
-                name           : doc.data().name,
-                imageURL       : doc.data().imageURL
-              });
-            }
-        });
-        resolve(obj);
-      })
-      .catch((error : any) => {
-        reject(error);
-      });
-    });
+  // getDocuments(collectionObj: string) : Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this._db.collection(collectionObj).get()
+  //     .then((querySnapshot) => {        
+  //       let obj : any = [];
+  //       querySnapshot.forEach((doc: any) => {
+  //         if (collectionObj === "Facilities") {
+  //           obj.push({
+  //               id             : doc.id,
+  //               name           : doc.data().name,
+  //               imageURL       : doc.data().imageURL
+  //             });
+  //           }
+  //       });
+  //       resolve(obj);
+  //     })
+  //     .catch((error : any) => {
+  //       reject(error);
+  //     });
+  //   });
+  // }
+
+  getDocuments(collectionObj : string) : Promise<any> {
+    return this._db.collection(collectionObj).get();
+  }
+  
+  getDocument(collectionObj : string, docID : string) : Promise<any> {
+    return this._db.collection(collectionObj).doc(docID).get();
   }
 
   /**
@@ -47,7 +52,7 @@ export class DbServiceProvider {
     docID : string,
     dataObj : any) : Promise<any>{
       return new Promise((resolve, reject) => {
-      this._db.collection(collectionObj).add(dataObj)
+      this._db.collection(collectionObj).doc(docID).set(dataObj)
         .then((obj : any) => {
           resolve(obj);
         })

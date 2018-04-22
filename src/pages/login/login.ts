@@ -43,7 +43,7 @@ export class LoginPage {
     this._authService.emailLogin(this._loginForm.value.email, this._loginForm.value.password)
       .then((user) => {
          this._utils.showToast('Logged in successfully!');
-         console.log(user.email+" logged in!");
+         console.log(user+" logged in!");
          this.navCtrl.setRoot(HomePage);
       })
       .catch(error => console.log(error));
@@ -63,7 +63,7 @@ export class LoginPage {
       .then((credential) => {
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
-        console.log(credential.user.email+" logged in successfully!");
+        console.log(credential.user+" logged in successfully!");
 
       })
       .catch(error => console.log(error));
@@ -72,7 +72,7 @@ export class LoginPage {
       .then((credential) => {
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
-        console.log(credential.user.email+" logged in successfully!");
+        console.log(credential.user+" logged in successfully!");
       })
       .catch(error => console.log(error));
     } else if (social == 'twitter') {
@@ -80,7 +80,7 @@ export class LoginPage {
       .then((credential) => {        
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
-        console.log(credential.user.email+" logged in successfully!");
+        console.log(credential.user+" logged in successfully!");
       })
       .catch(error => console.log(error));
     }

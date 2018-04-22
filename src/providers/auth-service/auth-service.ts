@@ -12,8 +12,7 @@ import firebase from "firebase";
 @Injectable()
 export class AuthServiceProvider {
 
-  private user: Observable<firebase.User>;
-  
+  private user: Observable<firebase.User>;  
 
   constructor(private _authService : AngularFireAuth, 
     private platform : Platform) {
@@ -28,8 +27,12 @@ export class AuthServiceProvider {
     return false;
   }
 
-  getUser() : any {
-    return this.user;
+  getUserImage() : string {
+    return this._authService.auth.currentUser.photoURL;
+  }
+
+  getUserEmail() : string {
+    return this._authService.auth.currentUser.email;
   }
 
   googleLogin() {

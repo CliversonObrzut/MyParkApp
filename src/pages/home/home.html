@@ -1,24 +1,43 @@
 <ion-header>
-    <ion-navbar color="blue">
-      <ion-toolbar color="dark">
-        <ion-buttons start>
-          <button ion-button icon-only color="primary" (click)="doLogout()">
-            <ion-icon color="dark" name="log-out"></ion-icon>
-          </button>
-        </ion-buttons>
-        <ion-title>Home</ion-title>
-      </ion-toolbar>
-    </ion-navbar>
-  </ion-header>
-  
+  <ion-navbar color="blue">
+    <ion-toolbar color="dark">
+      <ion-buttons start>
+        <button ion-button icon-only color="primary" (click)="doLogout()">
+          <ion-icon color="dark" name="log-out"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Home</ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
   
   <ion-content class="card-background-page">
-    <ion-list>
-      <ion-card *ngFor="let facility of documents">
-        <div class="img">
-          <img [src]="facility.imageURL" (click)="testButton(facility)"/>
-          <div class="card-title" (click)="testButton(facility)">{{facility.name}}</div>
-        </div>
-      </ion-card>
-    </ion-list>
-  </ion-content>
+      <ion-list *ngFor="let facility of facilitiesModel">
+        <ion-card *ngIf="facility.addedToFilter === false">
+          <div class="img">
+            <img [src]="facility.imageURL" (click)="selectFacility(facility)">
+            <div class="card-title" (click)="selectFacility(facility)">{{facility.name}}</div>
+          </div>
+        </ion-card>
+        <ion-card *ngIf="facility.addedToFilter === true" data-status="true">
+            <div class="img">
+              <img [src]="facility.imageURL" (click)="selectFacility(facility)">
+              <div class="card-title" (click)="selectFacility(facility)">{{facility.name}}</div>
+            </div>
+          </ion-card>
+      </ion-list>
+    </ion-content>
+
+    <ion-footer class="footer">
+        <ion-row>
+          <ion-col text-center ion-text color="white">
+              {{selectedFacilities}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+              <button *ngIf="filterList.length == 0" ion-button round color="lightprimary" class="marginTop" disabled (click)="search()">Search!</button>
+              <button *ngIf="filterList.length > 0" ion-button round color="lightprimary" class="marginTop" (click)="search()">Search!</button>
+          </ion-col>
+        </ion-row>
+      </ion-footer>
