@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UtilsProvider } from '../../providers/utils/utils';
+import { PreloaderProvider } from './../../providers/utils/preloader';
+import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
+import { DbServiceProvider } from './../../providers/db-service/db-service';
 
-/**
- * Generated class for the ParkDetailsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Park } from '../../models/park';
 
 @IonicPage()
 @Component({
@@ -15,11 +14,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ParkDetailsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  public parkDetails : Park;
+  constructor(public navParams : NavParams,
+    public navCtrl: NavController, 
+    public _dbService : DbServiceProvider, 
+    public _authService : AuthServiceProvider,
+    private _utilsService : UtilsProvider,
+    private _preloader : PreloaderProvider) {
+      this.parkDetails = navParams.data;
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ParkDetailsPage');
+    this._preloader.displayPreloader();
+    this.loadParkDetails();
+    this._preloader.hidePreloader();
+  }
+
+  loadParkDetails() {
+    this.parkDetails = this.navParams.data;
+    console.log(this.parkDetails);
   }
 
 }

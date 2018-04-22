@@ -1,6 +1,6 @@
 export class Rating {
-    ParkID? : string;
+    id? : string;
     rate?: number;
     numberOfRatings? : number;
-    SumOfRateValues? : number;
+    sumOfRateValues? : number;
 }

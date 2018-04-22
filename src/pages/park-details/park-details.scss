@@ -1,3 +1,52 @@
 page-park-details {
-
-}
+  .background-page {
+    background-color: #393937;
+    ion-card {
+        border-style: none;
+        border-radius: 0px;
+        background: none;
+        box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
+        ion-card-header {
+          background-color: #393937;
+          color: white;
+          padding: 16px 0px 16px 0px;
+          .star-rate{
+            float: right;
+            ion-icon {
+              color:yellow;
+            }
+          }
+        }
+        ion-slide {
+          height: 200px;
+          //border: 2px solid color($colors, white);
+        }
+        .adv-map p {
+          font-size: 0.7em !important;
+        }
+        .img {
+          position: relative;          
+          padding: 0px;
+        }
+        ion-item.h2 ion-item.p {
+          color: white;
+        }
+      }
+      ion-item {
+        background-color: #393937;
+        color: white;
+      }
+    
+      button[fab].fab-map {
+        top: calc(100% - 20px);
+        z-index: 50;
+      }
+    
+      .item-bold {
+        font-weight: bold;
+      }
+    }
+    ion-list-header {
+      background-color: #393937;
+    }
+  }
