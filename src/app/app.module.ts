@@ -22,6 +22,7 @@ import { LoginPage } from '../pages/login/login';
 import { ForgetPage } from '../pages/forget/forget';
 import { RegisterPage } from '../pages/register/register';
 import { SearchResultPage } from '../pages/search-result/search-result';
+import { ParkDetailsPage } from './../pages/park-details/park-details';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { SearchResultPage } from '../pages/search-result/search-result';
     ForgetPage,
     RegisterPage,
     SearchResultPage,
+    ParkDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { SearchResultPage } from '../pages/search-result/search-result';
     LoginPage,
     ForgetPage,
     RegisterPage,
-    SearchResultPage
+    SearchResultPage,
+    ParkDetailsPage
   ],
   providers: [
     StatusBar,

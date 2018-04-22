@@ -1,3 +1,39 @@
 page-search-result {
-
+    .card-background-page {
+      background-color: #393937;
+        ion-card {
+          position: relative;
+          text-align: center;
+          border-radius: 5px;
+          border: 1px solid color($colors, white);
+          .img {
+            max-width: 800px;
+            text-align: center;
+            height: 150px;
+          }
+          .card-title {
+            position: absolute;
+            top: 36%;
+            font-size: 2em;
+            width: 100%;
+            font-weight: bold;
+            color: #fff;          
+          }
+        }    
+        .card-subtitle {
+          font-size: 12pt;
+          text-align: center;
+          font-style: normal;
+          width: 100%;
+          color: #fff;
+        }  
+      }
+      .parksNotFound {
+        position: absolute;
+        text-align: center;
+        color: #fff;
+        font-size: 1em;
+        font-weight: bold;
+        width: 100%;
+      }
 }

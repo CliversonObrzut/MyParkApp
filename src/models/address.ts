@@ -1,5 +1,5 @@
 export class Address {
-    District? : string;
+    Suburb? : string;
     FullAddress?: string;
     PostCode? : string;
     State? : string;

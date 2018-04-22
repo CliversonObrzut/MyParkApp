@@ -9,6 +9,7 @@ import { DbServiceProvider } from './../../providers/db-service/db-service';
 
 import { Park } from '../../models/park';
 import { Facility } from './../../models/facility';
+import { ParkDetailsPage } from './../park-details/park-details';
 
 
 @IonicPage()
@@ -32,12 +33,13 @@ export class SearchResultPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchResultPage');
-  }
-
-  ionViewCanEnter(){
     this._preloader.displayPreloader();
     //this.getUserData();
     this.getSearchedParks();
+  }
+
+  ionViewCanEnter(){
+
   }
 
   getSearchedParks() : void {
@@ -73,5 +75,9 @@ export class SearchResultPage {
       }
     })
     .catch(err =>console.log(err))
+  }
+
+  getParkDetails (park : Park) {
+    this.navCtrl.push(ParkDetailsPage, park);
   }
 }
