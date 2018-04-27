@@ -6,6 +6,8 @@ import { AuthServiceProvider } from './../../providers/auth-service/auth-service
 import { DbServiceProvider } from './../../providers/db-service/db-service';
 
 import { Park } from '../../models/park';
+import { Prohibition } from '../../models/prohibition';
+import { Facility } from './../../models/facility';
 
 @IonicPage()
 @Component({
@@ -33,7 +35,49 @@ export class ParkDetailsPage {
 
   loadParkDetails() {
     this.parkDetails = this.navParams.data;
+    this.loadFacilityData();
+    this.loadProhibitionData();
     console.log(this.parkDetails);
   }
 
+  loadFacilityData()
+  {
+    let parkFacilities : Array<Facility> = new Array<Facility>();
+    this.parkDetails.facilities.forEach(item => {
+      let facility : Facility = new Facility();
+      console.log(item.id);
+      this._dbService.getDocument("Facilities", item.id)
+      .then (data => {
+        facility.parseToFacilityModel(data);
+        facility.quantity = item.quantity;
+        parkFacilities.push(facility);
+      });
+    });
+    this.parkDetails.facilities = parkFacilities;
+  }
+
+  loadProhibitionData()
+  {
+    let parkProhibitions : Array<Prohibition> = new Array<Prohibition>();
+    this.parkDetails.prohibitions.forEach(item => {
+      let prohibition : Prohibition = new Prohibition();
+      console.log(item.id);
+      this._dbService.getDocument("Prohibitions", item.id)
+      .then (data => {
+        prohibition.parseDocToProhibitionModel(data);
+        prohibition.restriction = item.restriction;
+        parkProhibitions.push(prohibition);
+      });
+    });
+    this.parkDetails.prohibitions = parkProhibitions;
+  }
+
+  viewRestriction(prohibition : any) {
+    if(prohibition.hiddenRestriction) {
+      prohibition.hiddenRestriction = false;
+    }
+    else {
+      prohibition.hiddenRestriction = true;
+    }
+  }
 }

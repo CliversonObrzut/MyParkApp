@@ -12,7 +12,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  private registerForm: FormGroup;
+  public registerForm: FormGroup;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,

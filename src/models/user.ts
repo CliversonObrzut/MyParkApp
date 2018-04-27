@@ -3,7 +3,8 @@ import { Rating } from './rating';
 
 export class User {
 
-    userId: string;
+    id: string;
+    userID: string;
     dateCreated: Date;
     email: string;
     favoriteParks? : Array<Park>;
@@ -12,11 +13,12 @@ export class User {
     ratings?: Array<Rating>;
 
     parseToUserModel(docRef : any) {
-        this.userId = docRef.id;
-        this.dateCreated = docRef.data().DateCreated;
-        this.email = docRef.data().Email;
-        this.name = docRef.data().Name;
-        this.imageURL = docRef.data().UserImageURL;
+        this.id = docRef.id;
+        this.userID = this.id;
+        this.dateCreated = docRef.data().dateCreated;
+        this.email = docRef.data().email;
+        this.name = docRef.data().name;
+        this.imageURL = docRef.data().imageURL;
         this.favoriteParks = docRef.data().FavoriteParks;
         this.ratings = docRef.data().UserRatings;
     }
@@ -26,7 +28,7 @@ export class User {
     }
 
     getId() : string {
-        return this.userId;
+        return this.id;
     }
 
     getImage() : string {

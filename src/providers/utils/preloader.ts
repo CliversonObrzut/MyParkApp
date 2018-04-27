@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 
 /**
 * Class for the Preloader provider.
-* @author Pablo Vieira
-* Date: 07/02/2018
+* @author Cliverson
+* Date: 24/04/2018
 * @version 1.0 
 */ 
 

@@ -34,8 +34,9 @@ export class SearchResultPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchResultPage');
     this._preloader.displayPreloader();
-    //this.getUserData();
     this.getSearchedParks();
+    //this.getUserData();
+   
   }
 
   ionViewCanEnter(){
@@ -55,17 +56,13 @@ export class SearchResultPage {
           let parksFacilityCount = 0;
           park.parseToParkModel(element);
           park.facilities.forEach(parkFacility => {
-            //console.log(parkFacility);
             this.facilitiesFilterList.forEach(filterFacility => {
-              //console.log(filterFacility);
               if(parkFacility.id == filterFacility.id)
               {
                 parksFacilityCount++;
               }
             });
           });
-          //console.log(filterCount);
-          //console.log(parksFacilityCount);
           if(parksFacilityCount == filterCount) {
             this.parksFiltered.push(park);
           }

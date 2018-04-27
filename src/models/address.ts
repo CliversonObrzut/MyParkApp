@@ -1,7 +1,15 @@
 export class Address {
-    Suburb? : string;
-    FullAddress?: string;
-    PostCode? : string;
-    State? : string;
-    Street? : string;
+    suburb? : string = "";
+    fullAddress?: string = "";
+    postCode? : string = "";
+    state? : string = "";
+    street? : string = "";
+
+    parseToAddressModel(docRef : any) {
+        this.suburb = docRef.suburb;
+        this.fullAddress = docRef.fullAddress;
+        this.postCode = docRef.postCode;
+        this.state = docRef.state;
+        this.street = docRef.street;
+    }
 }

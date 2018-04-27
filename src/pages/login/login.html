@@ -41,12 +41,30 @@
     </ion-grid>
   
     <div padding>
-  
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <button ion-button color="facebook" block class="btn-facebook" (click)="doSocialLogin('facebook')">
+              <ion-icon name="logo-facebook" md="logo-facebook"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button color="twitter" block class="btn-twitter" (click)="doSocialLogin('twitter')">
+              <ion-icon ios="logo-twitter" md="logo-twitter"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button color="google" block class="btn-gplus" (click)="doSocialLogin('google')">
+              <ion-icon ios="logo-google" md="logo-google"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       <!--  <button ion-button color="google" block icon-left margin-bottom (click)="doSocialLogin('google')">
         <ion-icon ios="logo-google" md="logo-google"></ion-icon>
         Login with Google
       </button> -->
-      <div class="row">
+      <!-- <div class="row">
         <div class="column">
           <button (click)="doSocialLogin('google')">
             <img src="../../assets/icon/google+_icon.png">
@@ -62,6 +80,6 @@
             <img src="../../assets/icon/twitter_icon.png">
           </button>
         </div>
-      </div>
+      </div> -->
     </div>  
   </ion-content>

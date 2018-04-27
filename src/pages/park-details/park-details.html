@@ -7,8 +7,8 @@
   <ion-content class="background-page">
 
       <ion-fab top right edge>
-        <button ion-fab color="danger">
-          <ion-icon name="md-share"></ion-icon>
+        <button ion-fab mini color="danger">
+          <ion-icon small name="md-share"></ion-icon>
         </button>
         <ion-fab-list>
           <button ion-fab>
@@ -27,11 +27,14 @@
       </ion-fab>
     
       <ion-card class="adv-map">
-        <ion-card-header>
+        <ion-card-header text-wrap class="park-name">
           {{parkDetails.name}}
           <div class="star-rate">
             <ion-icon *ngFor="let starName of parkDetails.starRatingArray" [name]="starName"></ion-icon>
-            {{parkDetails.parkRating | number:'1.1-1'}}
+            <div class="rate-text">
+                ({{parkDetails.parkRating | number:'1.1-1'}})
+                {{parkDetails.rating.numberOfRatings}}
+            </div>
           </div>
         </ion-card-header>
           <ion-slides>
@@ -43,10 +46,9 @@
               </ion-row>
             </ion-slide>
           </ion-slides>
-        <ion-item>
-          <h2>Sydney Park</h2>
-          <p>416 Sydney Park Rd, Alexandria NSW 2015</p>
-        </ion-item>
+          <ion-card-title text-wrap>
+            {{parkDetails.address.suburb}}  -  12 Km away
+          </ion-card-title>
         <!-- <ion-item actions>
           <span ion-text item-start color="secondary" class="item-bold">18 min</span>
           <span ion-text item-start color="subtle">(2.6 mi)</span>
@@ -59,20 +61,20 @@
       </ion-card>
     
       <ion-row no-padding>
-        <ion-col>
-          <button ion-button clear small color="" icon-start>
+        <ion-col text-center>
+          <button class="action-button" ion-button small round icon-start>
             <ion-icon name='star'></ion-icon>
             Favorite
           </button>
         </ion-col>
-        <ion-col>
-          <button ion-button clear small color="danger" icon-start>
+        <ion-col text-center>
+          <button class="action-button" ion-button small round icon-start>
             <ion-icon name='search'></ion-icon>
             Search
           </button>
         </ion-col>    
-        <ion-col text-right>
-          <button ion-button clear small color="danger" icon-start>
+        <ion-col text-center>
+          <button class="action-button" ion-button small round icon-start>
             <ion-icon name='map'></ion-icon>
             Map
           </button>
@@ -80,107 +82,69 @@
       </ion-row>
     
       <ion-card class="adv-map">
-        <div style="position: relative">
-          <img src="../../assets/imgs/advance-card-map-paris.png">
+        <ion-card-header text-wrap class="park-full-address">
+          {{parkDetails.address.fullAddress}}        
+        </ion-card-header>
+        <div class="map">
+          <img src="assets/imgs/advance-card-map-paris.png">
         </div>
-    
-        <ion-item actions>
-          <span ion-text item-start color="secondary" class="item-bold">26 min</span>
-          <span ion-text item-start color="subtle">(8.1 mi)</span>
-          <button ion-button color="secondary" clear item-end icon-start>
-            <ion-icon name='navigate'></ion-icon>
-            Start
-          </button>
-        </ion-item>
-    
+        <ion-card-title>
+          <ion-row no-padding>
+            <ion-col>
+                <span ion-text item-end clear color="secondary" class="item-bold">26 min</span>
+            </ion-col>
+            <ion-col>
+                <span ion-text clear color="subtle">(8.1 mi)</span>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="secondary" clear icon-start>
+                    <ion-icon name='navigate'></ion-icon>
+                    Start
+                  </button>
+            </ion-col>
+          </ion-row>
+            <!-- <span ion-text item-start color="secondary" class="item-bold">26 min</span>
+            <span ion-text item-start color="subtle">(8.1 mi)</span>
+            <button ion-button color="secondary" clear item-end icon-start>
+              <ion-icon name='navigate'></ion-icon>
+              Start
+            </button> -->
+        </ion-card-title>    
       </ion-card>
     
-      <ion-list no-border>
-    
-        <ion-list-header text-center color="white">
-          Activities
-        </ion-list-header>
-    
-        <ion-item>
-          <ion-icon name='car' item-start></ion-icon>
-          Car Parking
+      <ion-list no-border>    
+        <ion-list-header text-center>
+          Facilities
+        </ion-list-header>    
+        <ion-item *ngFor="let facility of parkDetails.facilities">
+            <div class="fac-pro-ico">
+                <img [src]="facility.iconURL">
+            </div>
+          {{facility.id}}
           <ion-note item-end>
-            Free
+            {{facility.quantity}}
           </ion-note>
         </ion-item>
-    
-        <ion-item>
-          <ion-label>
-            Gym
-          </ion-label>
-          <ion-icon name='body' item-start></ion-icon>
-        </ion-item>
-    
-        <ion-item>
-          <ion-icon name='leaf' item-start></ion-icon>
-          Picnic Table
-        </ion-item>
-    
-        <ion-item>
-          <ion-icon name='hand' item-start></ion-icon>
-          Toilets
-        </ion-item>
-    
       </ion-list>
     
     
-      <ion-list>
-    
-        <ion-list-header>
-          Permissions
-        </ion-list-header>
-    
-        <ion-item>
-          Facilities
-          <ion-icon name='color-wand' item-start></ion-icon>
-          <ion-note item-end>5</ion-note>
+     <ion-list no-border>    
+        <ion-list-header text-center>
+          Prohibitions
+        </ion-list-header>    
+        <ion-item *ngFor="let prohibition of parkDetails.prohibitions">
+            <div class="fac-pro-ico">
+                <img [src]="prohibition.iconURL">
+            </div>
+          {{prohibition.id}}
+            <ion-note item-end *ngIf='prohibition.restriction'>
+              <img [src]="prohibition.iconAlertURL" (click)="viewRestriction(prohibition)">
+            </ion-note>
+            <ion-item [hidden]="prohibition.hiddenRestriction">
+              <ion-note item-middle text-wrap>
+                {{prohibition.restriction}}
+              </ion-note>
+            </ion-item>
         </ion-item>
-    
-        <ion-item>
-          <ion-label>
-            Quidditch Practice
-          </ion-label>
-          <ion-icon name='brush' item-start></ion-icon>
-          <ion-note item-end>5</ion-note>
-        </ion-item>
-    
-    
-        <ion-item>
-          <ion-icon name='wine' item-start></ion-icon>
-          Mead Drinking
-          <ion-note item-end>no</ion-note>
-        </ion-item>
-    
-    
-      </ion-list>
-    
-      <ion-list>
-    
-        <ion-list-header>
-          phohibitios
-        </ion-list-header>
-    
-        <ion-item>
-          <ion-icon name='paw' item-start></ion-icon>
-          Unleashed Dogs
-        </ion-item>
-    
-        <ion-item>
-          <ion-icon name='wineglass' item-start></ion-icon>
-          Drink
-          <ion-note item-end>not allow</ion-note>
-        </ion-item>
-    
-    
-    
-      </ion-list>
-    
-    
-    
-    
-    </ion-content>
+      </ion-list>   
+  </ion-content>

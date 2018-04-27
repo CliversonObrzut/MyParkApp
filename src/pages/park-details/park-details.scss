@@ -6,6 +6,13 @@ page-park-details {
         border-radius: 0px;
         background: none;
         box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
+        margin: 10px 10px 0px 10px;
+        .park-name {
+          font-size: 1.6rem;
+        }
+        .park-full-address {
+          font-size: 1.3rem;
+        }
         ion-card-header {
           background-color: #393937;
           color: white;
@@ -15,27 +22,49 @@ page-park-details {
             ion-icon {
               color:yellow;
             }
+            .rate-text {
+              position: relative;
+              bottom: 2px;
+              font-size: 10pt;
+              display: inline;
+            }
           }
         }
-        ion-slide {
+        ion-slides {
           height: 200px;
-          //border: 2px solid color($colors, white);
+          border: 2px solid color($colors, white);
         }
         .adv-map p {
           font-size: 0.7em !important;
         }
         .img {
-          position: relative;          
-          padding: 0px;
+          position: relative;
+          padding: 0px;          
+        }
+        .map {
+          position: relative;
+          border: 2px solid color($colors, blue);
+        }
+        ion-card-title {
+          color: white;
+          font-size: 1.4rem;
+        
+          ion-row {
+            ion-col {
+              width: 100%;
+              height: 100%;
+              justify-content: center;
+            }
+          }
         }
         ion-item.h2 ion-item.p {
           color: white;
         }
       }
-      ion-item {
-        background-color: #393937;
-        color: white;
-      }
+      // ion-item {
+      //   background-color: #393937;
+      //   color: white;
+      // }
     
       button[fab].fab-map {
         top: calc(100% - 20px);
@@ -45,8 +74,35 @@ page-park-details {
       .item-bold {
         font-weight: bold;
       }
+      ion-list {
+        background-color: #393937;
+        ion-list-header {
+          background-color: #488aff;
+          color: white;
+        }
+        ion-item {
+          background-color: #393937;
+          color: white;
+          .fac-pro-ico {
+            display: inline-block;
+            margin-right: 20px;
+            width: 25px;
+            height: 25px;
+          }
+        }
+     }
     }
-    ion-list-header {
-      background-color: #393937;
+    ion-row {
+    //   height: 30px;
+      ion-col {
+        .action-button {
+          max-width: 100px;
+          background-color: yellow;
+          color: black;
+        }
+    //     height: 100%;
+    //     //display: block;
+    //     vertical-align: middle;
+      }
     }
   }

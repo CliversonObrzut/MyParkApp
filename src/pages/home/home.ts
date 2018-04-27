@@ -68,7 +68,10 @@ export class HomePage {
           data.forEach(document => {
             let facility : Facility = new Facility();
             facility.parseToFacilityModel(document);
-            this.facilitiesModel.push(facility);
+            console.log(facility);
+            if(facility.category == "activity") {
+              this.facilitiesModel.push(facility);
+            }            
           });
           console.log("Data collected!");
           console.log(this.facilitiesModel);
