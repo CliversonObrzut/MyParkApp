@@ -8,7 +8,7 @@ export class Prohibition {
 
     parseObjToProhibitionModel(docRef : any)
     {
-        this.id = docRef.name;
+        this.id = docRef.id;
         this.name = docRef.name;
         this.iconURL = docRef.iconURL;
         this.restriction = docRef.restriction;

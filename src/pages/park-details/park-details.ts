@@ -59,6 +59,7 @@ export class ParkDetailsPage {
   loadProhibitionData()
   {
     let parkProhibitions : Array<Prohibition> = new Array<Prohibition>();
+    console.log(this.parkDetails.prohibitions);
     this.parkDetails.prohibitions.forEach(item => {
       let prohibition : Prohibition = new Prohibition();
       console.log(item.id);
