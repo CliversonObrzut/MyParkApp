@@ -1,15 +1,16 @@
 <ion-header>
-  <ion-navbar color="blue">
-    <ion-toolbar color="dark">
-      <ion-buttons start>
-        <button ion-button icon-only color="primary" (click)="doLogout()">
-          <ion-icon color="white" name="log-out"></ion-icon>
-        </button>
+    <ion-navbar color="blue">
+      <button ion-button menuToggle ion-buttons end>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-buttons start >
+        <button ion-button (click)="openSearchPage()">
+        <ion-icon name="search" class="searchIcon"></ion-icon>
+       </button>
       </ion-buttons>
       <ion-title>Home</ion-title>
-    </ion-toolbar>
-  </ion-navbar>
-</ion-header>
+    </ion-navbar>
+  </ion-header>
   
   <ion-content class="card-background-page">
       <ion-list *ngFor="let facility of facilitiesModel">

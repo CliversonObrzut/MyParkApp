@@ -1,8 +1,6 @@
-import { Address } from './../../models/address';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { UtilsProvider } from '../../providers/utils/utils';
 import { PreloaderProvider } from './../../providers/utils/preloader';
 import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { DbServiceProvider } from './../../providers/db-service/db-service';
@@ -26,7 +24,6 @@ export class SearchResultPage {
     public navCtrl: NavController, 
     public _dbService : DbServiceProvider, 
     public _authService : AuthServiceProvider,
-    private _utilsService : UtilsProvider,
     private _preloader : PreloaderProvider) {
       this.facilitiesFilterList = navParams.data;
     }

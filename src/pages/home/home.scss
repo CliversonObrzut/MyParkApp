@@ -1,4 +1,11 @@
 page-home {
+  .list-ios{
+    margin-bottom: 5px;
+  }
+  .searchIcon{
+    margin-left: 15px;
+    color: white;
+  }
     .card-background-page {
         background-color: #393937;
         ion-card {
@@ -6,6 +13,7 @@ page-home {
           text-align: center;
           border-radius: 5px;
           border: 1px solid color($colors, white);
+          
           .img {
             max-width: 800px;
             height: 110px;
@@ -52,12 +60,20 @@ page-home {
         }
       }  
       ion-card[data-status="true"] {
-        border: 1px solid color($colors, darkgreen);
+        border: 5px solid color($colors, danger);
         .img {
-          opacity: 0.5;
+          opacity: 0.8;
+          //filter: blur(5px);
+          //filter: sepia(100%);
+          //filter: grayscale(100%);
+          //filter: brightness(200%);
+          //filter: contrast(200%);
+          //filter: drop-shadow(8px 8px 10px, white);
+          //filter: hue-rotate(90deg);
+          //filter: saturate(800%);
         }
         .card-title {
-          color: darkgreen;
+          color: color($colors,danger);
         }
       }
     }
