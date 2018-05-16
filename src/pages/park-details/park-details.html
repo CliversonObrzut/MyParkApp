@@ -11,17 +11,14 @@
           <ion-icon small name="md-share"></ion-icon>
         </button>
         <ion-fab-list>
-          <button ion-fab>
+          <button ion-fab (click)="facebookShare(parkDetails)">
             <ion-icon name="logo-facebook"></ion-icon>
           </button>
-          <button ion-fab>
+          <button ion-fab (click)="twitterShare(parkDetails)">
             <ion-icon name="logo-twitter"></ion-icon>
           </button>
-          <button ion-fab>
-            <ion-icon name="logo-vimeo"></ion-icon>
-          </button>
-          <button ion-fab>
-            <ion-icon name="logo-googleplus"></ion-icon>
+          <button ion-fab (click)="instagramShare(parkDetails)">
+            <ion-icon name="logo-instagram"></ion-icon>
           </button>
         </ion-fab-list>
       </ion-fab>
@@ -63,20 +60,20 @@
       <ion-row no-padding>
         <ion-col text-center>
           <button class="action-button" ion-button small round icon-start>
-            <ion-icon name='star'></ion-icon>
-            Favorite
+            <ion-icon name='chatboxes'></ion-icon>
+            Review
           </button>
         </ion-col>
         <ion-col text-center>
           <button class="action-button" ion-button small round icon-start>
-            <ion-icon name='search'></ion-icon>
-            Search
+            <ion-icon name='star-half'></ion-icon>
+            Rate
           </button>
         </ion-col>    
         <ion-col text-center>
           <button class="action-button" ion-button small round icon-start>
-            <ion-icon name='map'></ion-icon>
-            Map
+            <ion-icon name='heart'></ion-icon>
+            Favourite
           </button>
         </ion-col>
       </ion-row>
