@@ -62,14 +62,16 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     if (page.component==LoginPage){
       this.doLogout();
+      this.activePage = this.pages[0];
      } 
      else if(page.component == HomePage) {
       this.nav.setRoot(page.component);
+      this.activePage = page;
      }
      else{
       this.nav.push(page.component);
+      this.activePage = page;
      }    
-     this.activePage = page;
   }
 
   checkActivePage(page) {
@@ -81,7 +83,6 @@ export class MyApp {
       .then(() => {
         this._utilsService.showToast('You have been successfully logged out!');
         console.log("User logged out!");
-        this.activePage = this.pages[0];
         this.nav.setRoot(LoginPage);
       })
       .catch(err =>console.log(err))
