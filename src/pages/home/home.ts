@@ -78,16 +78,6 @@ export class HomePage {
       .catch(err =>console.log(err))
     }
   
-    // doLogout() {
-    //   this._authService.signOut()
-    //     .then(() => {
-    //       this._utilsService.showToast('You have been successfully logged out!');
-    //       console.log("User logged out!");
-    //       this.navCtrl.setRoot(LoginPage);
-    //     })
-    //     .catch(err =>console.log(err))
-    // }
-
     selectFacility(facility : Facility) {
       let listItemIndex : number = undefined;
       this.filterList.forEach((item : Facility, index : number) => {

@@ -10,7 +10,7 @@ import { UtilsProvider } from "../../providers/utils/utils";
   templateUrl: 'forget.html',
 })
 export class ForgetPage {
-  private forgetForm: FormGroup;
+  public forgetForm: FormGroup;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,

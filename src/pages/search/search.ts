@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the SearchPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Park } from './../../models/park';
+import { ParkDetailsPage } from './../park-details/park-details';
 
 @IonicPage()
 @Component({
@@ -15,6 +11,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SearchPage {
 
+  public parksFiltered: Array<Park> = new Array<Park>();
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -22,4 +19,11 @@ export class SearchPage {
     console.log('ionViewDidLoad SearchPage');
   }
 
+  searchParks(query : string) : any{
+
+  }
+
+  getParkDetails (park : Park) {
+    this.navCtrl.push(ParkDetailsPage, park);
+  }
 }

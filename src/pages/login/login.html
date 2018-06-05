@@ -1,22 +1,17 @@
 <ion-header>
-
     <ion-navbar color="blue">
       <ion-title>Login</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-  
+    </ion-navbar>  
+  </ion-header>  
   
   <ion-content padding class="background" scroll="false">
     <form [formGroup]="_loginForm" (ngSubmit)="doLogin()">
   
-      <ion-list>
-  
+      <ion-list>  
         <ion-item>
           <ion-label color="dark" floating>Email</ion-label>
           <ion-input type="email" formControlName="email"></ion-input>
-        </ion-item>
-  
+        </ion-item>  
         <ion-item>
           <ion-label color="dark" floating>Password</ion-label>
           <ion-input type="password" formControlName="password"></ion-input>
@@ -60,26 +55,5 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <!--  <button ion-button color="google" block icon-left margin-bottom (click)="doSocialLogin('google')">
-        <ion-icon ios="logo-google" md="logo-google"></ion-icon>
-        Login with Google
-      </button> -->
-      <!-- <div class="row">
-        <div class="column">
-          <button (click)="doSocialLogin('google')">
-            <img src="../../assets/icon/google+_icon.png">
-          </button>
-        </div>
-        <div class="column">
-          <button (click)="doSocialLogin('facebook')">
-            <img src="../../assets/icon/facebook-icon1.png">
-          </button>
-        </div>
-        <div class="column">
-          <button (click)="doSocialLogin('twitter')">
-            <img src="../../assets/icon/twitter_icon.png">
-          </button>
-        </div>
-      </div> -->
     </div>  
   </ion-content>

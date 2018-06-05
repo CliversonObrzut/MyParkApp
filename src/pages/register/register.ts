@@ -30,6 +30,7 @@ export class RegisterPage {
   }
 
   doRegister() {
+    this.createMyParkUser();
     this._authService.emailSignUp(this.registerForm.value.email, this.registerForm.value.password)
       .then((user) => {
         this.utils.showToast('User created successfully!');
@@ -37,5 +38,9 @@ export class RegisterPage {
         this.navCtrl.setRoot(HomePage);
       })
       .catch(error => console.log(error));
+  }
+
+  createMyParkUser(){
+    let username = this.registerForm.value.username;
   }
 }

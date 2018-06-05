@@ -8,13 +8,6 @@ import { RegisterPage } from '../register/register';
 import { ForgetPage } from '../forget/forget';
 import { HomePage } from '../home/home';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -64,7 +57,6 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
         console.log(credential.user+" logged in successfully!");
-
       })
       .catch(error => console.log(error));
     } else if (social == 'facebook') {
