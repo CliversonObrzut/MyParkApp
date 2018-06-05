@@ -20,6 +20,7 @@ export class RegisterPage {
     private _authService : AuthServiceProvider,
     private utils : UtilsProvider) {
       this.registerForm = this.formBuilder.group({
+        username:[''],
         email: ['', Validators.compose([Validators.email, Validators.required])],
         password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
       });
@@ -42,5 +43,6 @@ export class RegisterPage {
 
   createMyParkUser(){
     let username = this.registerForm.value.username;
+    console.log(username);
   }
 }

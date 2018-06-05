@@ -57,6 +57,7 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
         console.log(credential.user+" logged in successfully!");
+        console.log(credential);
       })
       .catch(error => console.log(error));
     } else if (social == 'facebook') {
@@ -65,6 +66,10 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
         console.log(credential.user+" logged in successfully!");
+        console.log(credential.user.displayName);
+        console.log(credential.user.email);
+        console.log(credential.user.photoURL);
+        console.log(credential);
       })
       .catch(error => console.log(error));
     } else if (social == 'twitter') {
@@ -73,6 +78,7 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
         console.log(credential.user+" logged in successfully!");
+        console.log(credential);
       })
       .catch(error => console.log(error));
     }
