@@ -19,6 +19,10 @@ export class Park {
     rating? : Rating;
     parkRating: number = 0;
     starRatingArray : Array<String> = [];
+    addedToFavourites : boolean = false;
+    userParkRating : number = 0;
+    userStarRatingArray : Array<String> = [];
+    userRateHidden : boolean = true;
 
     parseToParkModel(docRef : any) {
         this.id = docRef.id;        
@@ -68,7 +72,7 @@ export class Park {
             noDecimal = noDecimal * 10;
         }
 
-
+        this.starRatingArray = [];
         for(let i:number = 0; i<5; i++) {
             if((rat / noDecimal) <= 0) {
                 this.starRatingArray.push("star-outline");
@@ -83,6 +87,26 @@ export class Park {
                 rat = rat-noDecimal;
             }
         }
+    }
+
+    updateParkRating() {
+        this.calculateParkRating();
+        this.updateStarRatingArray();
+    }
+
+    updateUserStarRatingArray(rate : number) {
+        this.userParkRating = rate;
+        this.userStarRatingArray = [];
+
+        for(let i:number = 1; i<=5; i++) {
+            if(i <= this.userParkRating) {
+                this.userStarRatingArray.push("star");                
+            }
+            else {
+                this.userStarRatingArray.push("star-outline");
+            }
+        }
+
     }
 }
 

@@ -65,16 +65,38 @@
           </button>
         </ion-col>
         <ion-col text-center>
-          <button class="action-button" ion-button small round icon-start>
+          <button class="action-button" (click)="openRate(parkDetails)"  ion-button small round icon-start>
             <ion-icon name='star-half'></ion-icon>
             Rate
           </button>
         </ion-col>    
-        <ion-col text-center>
-          <button class="action-button" ion-button small round icon-start>
+        <ion-col text-center *ngIf="parkDetails.addedToFavourites === false">
+          <button class="action-button" (click)="doFavourite(parkDetails)" ion-button small round icon-start>
             <ion-icon name='heart'></ion-icon>
             Favourite
           </button>
+        </ion-col>
+        <ion-col text-center *ngIf="parkDetails.addedToFavourites === true" data-status="true">
+          <button class="action-button" (click)="doFavourite(parkDetails)" ion-button small round icon-start>
+            <ion-icon name='heart'></ion-icon>
+            Favourite
+          </button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="parkDetails.userRateHidden === false">
+        <ion-col text-center>
+          <div class="user-stars">
+              <div class="user-star-rate" *ngFor="let starName of parkDetails.userStarRatingArray; let i = index;">
+                  <ion-icon [name]="starName" (click)="ratePark(i)"></ion-icon>
+                </div>
+                <div style="display:block">
+                  <button class="action-button" (click)="removeUserRate()"  ion-button small round icon-start>
+                    <!-- <ion-icon name='star-half'></ion-icon> -->
+                    Clear
+                  </button>
+                </div>
+          </div>
         </ion-col>
       </ion-row>
     

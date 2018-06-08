@@ -5,12 +5,12 @@ export class User {
 
     id: string;
     userID: string;
-    dateCreated: Date;
+    dateCreated: string;
     email: string;
-    favoriteParks? : Array<Park>;
+    favouriteParks? : Array<Park> = [];
     name : string;
     imageURL : string;
-    ratings?: Array<Rating>;
+    ratings?: Array<Rating> = [];
 
     parseToUserModel(docRef : any) {
         this.id = docRef.id;
@@ -19,8 +19,21 @@ export class User {
         this.email = docRef.data().email;
         this.name = docRef.data().name;
         this.imageURL = docRef.data().imageURL;
-        this.favoriteParks = docRef.data().FavoriteParks;
-        this.ratings = docRef.data().UserRatings;
+
+        docRef.data().favouriteParks.forEach(element => {
+            let park : Park =  new Park();
+            park.id = element.id;
+            this.favouriteParks.push(park);
+        });
+        console.log(this.favouriteParks);
+
+        docRef.data().userRatings.forEach(element => {
+            let rating : Rating = new Rating();
+            rating.parkId = element.parkId;
+            rating.rate = element.rate;
+            this.ratings.push(rating);
+        });
+        console.log(this.ratings);
     }
 
     getName() : string {

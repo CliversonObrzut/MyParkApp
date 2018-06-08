@@ -4,7 +4,7 @@ export class Prohibition {
     iconURL? : string = "";
     restriction? : string = "";
     hiddenRestriction : boolean = true;
-    iconAlertURL : string = "https://firebasestorage.googleapis.com/v0/b/mypark-5778d.appspot.com/o/prohibition-ico%2Fprohibited_alert.gif?alt=media&token=494ceb79-3c74-40f0-abf1-c3159c5b7a2d";
+    iconAlertURL : string = "https://firebasestorage.googleapis.com/v0/b/mypark-5778d.appspot.com/o/prohibition-ico%2Fprohibited_alert.png?alt=media&token=58ad87a2-1feb-48d2-b0cb-0afc273727cd";
 
     parseObjToProhibitionModel(docRef : any)
     {

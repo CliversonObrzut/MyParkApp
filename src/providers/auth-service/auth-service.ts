@@ -30,6 +30,10 @@ export class AuthServiceProvider {
     return this._authService.auth.currentUser.email;
   }
 
+  getUserCreationDate() : string {
+    return this._authService.auth.currentUser.metadata.creationTime;
+  }
+
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
     return this.socialSignIn(provider);

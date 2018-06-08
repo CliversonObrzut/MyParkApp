@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
+import { User } from '../../models/user';
 
 @Injectable()
 export class DbServiceProvider {
@@ -42,6 +43,18 @@ export class DbServiceProvider {
   
   getDocument(collectionObj : string, docID : string) : Promise<any> {
     return this._db.collection(collectionObj).doc(docID).get();
+  }
+
+  isNewUser(email : string) : boolean {
+    let user = this.getDocument("Users", email)
+    if(user)
+      return true;
+    return false;
+  }
+
+  getCurrentTimestamp()
+  {
+    return this._db.FieldValue.serverTimestamp();
   }
 
   /**

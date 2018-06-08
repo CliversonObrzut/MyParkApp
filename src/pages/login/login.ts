@@ -3,10 +3,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
+import { DbServiceProvider } from './../../providers/db-service/db-service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RegisterPage } from '../register/register';
 import { ForgetPage } from '../forget/forget';
 import { HomePage } from '../home/home';
+import { Rating } from './../../models/rating';
+import { Park } from './../../models/park';
 
 @IonicPage()
 @Component({
@@ -15,11 +18,13 @@ import { HomePage } from '../home/home';
 })
 export class LoginPage {
   public _loginForm: FormGroup;
+  private collection : string;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private _authService : AuthServiceProvider,
+    private _dbService : DbServiceProvider,
     private _utils : UtilsProvider,
     private formBuilder : FormBuilder) {
       this._loginForm = this.formBuilder.group({
@@ -54,33 +59,87 @@ export class LoginPage {
     if (social == 'google') {
       this._authService.googleLogin()
       .then((credential) => {
+        if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
+          this.createMyParkUserFromGoogle(credential);
+        }
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
-        console.log(credential.user+" logged in successfully!");
-        console.log(credential);
+        console.log("User logged in with Google");
       })
       .catch(error => console.log(error));
     } else if (social == 'facebook') {
       this._authService.facebookLogin()
       .then((credential) => {
+        if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
+          this.createMyParkUserFromFacebook(credential);
+        }
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
-        console.log(credential.user+" logged in successfully!");
-        console.log(credential.user.displayName);
-        console.log(credential.user.email);
-        console.log(credential.user.photoURL);
-        console.log(credential);
+        console.log("User logged in with Facebook");
       })
       .catch(error => console.log(error));
     } else if (social == 'twitter') {
       this._authService.twitterLogin()
-      .then((credential) => {        
+      .then((credential) => {
+        if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
+          this.createMyParkUserFromTwitter(credential);
+        }
         this.navCtrl.setRoot(HomePage);
         this._utils.showToast("Logged in successfully!");
-        console.log(credential.user+" logged in successfully!");
-        console.log(credential);
+        console.log("User logged in with Twitter");
       })
       .catch(error => console.log(error));
     }
+  }
+
+  createMyParkUserFromGoogle(credential : any) : void {
+    this.collection = "Users";
+    let email = credential.additionalUserInfo.profile.email;
+    let username = credential.additionalUserInfo.profile.given_name;
+
+    let user = {
+      email: email,
+      name: username,
+      dateCreated: this._authService.getUserCreationDate(),
+      favouriteParks: new Array<Park>(),
+      ratings: new Array<Rating>(),
+      imageURL: credential.additionalUserInfo.profile.picture
+    }
+
+    this._dbService.addDocument(this.collection,email,user);
+  }
+
+  createMyParkUserFromFacebook(credential : any) : void {
+    this.collection = "Users";
+    let email = credential.additionalUserInfo.profile.email;
+    let username = credential.additionalUserInfo.profile.first_name;
+
+    let user = {
+      email: email,
+      name: username,
+      dateCreated: this._authService.getUserCreationDate(),
+      favouriteParks: new Array<Park>(),
+      ratings: new Array<Rating>(),
+      imageURL: credential.additionalUserInfo.profile.picture.data.url
+    }
+
+    this._dbService.addDocument(this.collection,email,user);
+  }
+
+  createMyParkUserFromTwitter(credential : any) : void {
+    this.collection = "Users";
+    let email = credential.additionalUserInfo.profile.email;
+    let username = credential.additionalUserInfo.profile.name;
+
+    let user = {
+      email: email,
+      name: username,
+      dateCreated: this._authService.getUserCreationDate(),
+      favouriteParks: new Array<Park>(),
+      ratings: new Array<Rating>(),
+      imageURL: credential.additionalUserInfo.profile.profile_image_url
+    }
+
+    this._dbService.addDocument(this.collection,email,user);
   }
 }

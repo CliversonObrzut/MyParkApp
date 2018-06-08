@@ -93,16 +93,31 @@ page-park-details {
      }
     }
     ion-row {
-    //   height: 30px;
       ion-col {
         .action-button {
           max-width: 100px;
           background-color: yellow;
           color: black;
         }
-    //     height: 100%;
-    //     //display: block;
-    //     vertical-align: middle;
+        .user-stars {
+          background: grey;
+          width: 100%;
+          height: 100%;
+          margin: 0 auto;
+          .user-star-rate {
+            font-size: 24pt;
+            display: inline;
+            margin: 5px;
+            ion-icon {
+              color:yellow;
+            }
+          }
+        }
+      }
+      ion-col[data-status="true"]{
+        .action-button {
+          color: color($colors,danger);
+        }
       }
     }
   }

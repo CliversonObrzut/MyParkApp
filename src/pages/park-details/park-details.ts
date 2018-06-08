@@ -1,3 +1,4 @@
+import { Rating } from './../../models/rating';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
@@ -9,6 +10,7 @@ import { DbServiceProvider } from './../../providers/db-service/db-service';
 import { Park } from '../../models/park';
 import { Prohibition } from '../../models/prohibition';
 import { Facility } from './../../models/facility';
+import { User } from '../../models/user';
 
 @IonicPage()
 @Component({
@@ -18,6 +20,9 @@ import { Facility } from './../../models/facility';
 export class ParkDetailsPage {
 
   public parkDetails : Park;
+  private collection : string;
+  public user : User = new User();
+
   constructor(public navParams : NavParams,
     public navCtrl: NavController,
     public socialSharing : SocialSharing,
@@ -38,9 +43,51 @@ export class ParkDetailsPage {
 
   loadParkDetails() {
     this.parkDetails = this.navParams.data;
+    this.loadUserData();
     this.loadFacilityData();
     this.loadProhibitionData();
     console.log(this.parkDetails);
+  }
+
+  loadUserData() {
+      this.collection = "Users";
+      console.log(this._authService.getUserEmail());
+      this._dbService.getDocument(this.collection, this._authService.getUserEmail())
+      .then(data => {
+        console.log("returned user!");
+        console.log(data.data());
+        this.user.parseToUserModel(data);
+        console.log(this.user);
+        this.SetUserFavouriteOption();
+        this.SetUserRatingOption();
+      })
+      .catch(err => {
+        console.log("it did not retrieved user data from db");
+        console.log(err);
+      });
+  }
+
+  SetUserFavouriteOption(){
+    console.log(this.parkDetails.id);
+    if(this.user.favouriteParks.some(p => p.id == this.parkDetails.id)) {
+      this.parkDetails.addedToFavourites = true;
+      console.log("park is a user favourite");
+    }
+    else {
+      this.parkDetails.addedToFavourites = false;
+      console.log("parks is not a user favourite");
+    }
+  }
+
+  SetUserRatingOption() {
+    if(this.user.ratings.some(p => p.parkId == this.parkDetails.id)) {
+      let rating : Rating = new Rating();
+      rating = this.user.ratings.find(r => r.parkId == this.parkDetails.id);
+      this.parkDetails.updateUserStarRatingArray(rating.rate);
+    }
+    else {
+      this.parkDetails.updateUserStarRatingArray(0);
+    }
   }
 
   loadFacilityData()
@@ -54,6 +101,11 @@ export class ParkDetailsPage {
         facility.parseToFacilityModel(data);
         facility.quantity = item.quantity;
         parkFacilities.push(facility);
+        console.log("Facilities added correctly");
+      })
+      .catch(() => {
+        this._utilsService.showToast("Facilities did not load");
+        console.log("Could not load facilities from database");
       });
     });
     this.parkDetails.facilities = parkFacilities;
@@ -63,17 +115,27 @@ export class ParkDetailsPage {
   {
     let parkProhibitions : Array<Prohibition> = new Array<Prohibition>();
     console.log(this.parkDetails.prohibitions);
-    this.parkDetails.prohibitions.forEach(item => {
-      let prohibition : Prohibition = new Prohibition();
-      console.log(item.id);
-      this._dbService.getDocument("Prohibitions", item.id)
-      .then (data => {
-        prohibition.parseDocToProhibitionModel(data);
-        prohibition.restriction = item.restriction;
-        parkProhibitions.push(prohibition);
+    try{
+      this.parkDetails.prohibitions.forEach(item => {
+        let prohibition : Prohibition = new Prohibition();
+        console.log(item.id);
+        this._dbService.getDocument("Prohibitions", item.id)
+        .then (data => {
+          prohibition.parseDocToProhibitionModel(data);
+          prohibition.restriction = item.restriction;
+          parkProhibitions.push(prohibition);
+        })
+        .catch(() => {
+          this._utilsService.showToast("Prohibitions did not load");
+          console.log("Could not load prohibitions from database");
+        });
       });
-    });
-    this.parkDetails.prohibitions = parkProhibitions;
+      this.parkDetails.prohibitions = parkProhibitions;
+    }
+    catch {
+      console.log("Error iterating in prohibitions list");
+      this._preloader.hidePreloader();
+    }
   }
 
   viewRestriction(prohibition : any) {
@@ -83,6 +145,115 @@ export class ParkDetailsPage {
     else {
       prohibition.hiddenRestriction = true;
     }
+  }
+
+  doFavourite(parkDetails : Park) {
+    if(parkDetails.addedToFavourites) {
+      parkDetails.addedToFavourites = false;
+      this.removeFavourite();
+    }
+    else {
+      parkDetails.addedToFavourites = true;
+      this.addFavourite();
+    }
+  }
+
+  addFavourite() {
+
+  }
+
+  removeFavourite() {
+
+  }
+
+  openRate(parkDetails : Park) {
+    //parkDetails.updateUserStarRatingArray(3);
+    if(parkDetails.userRateHidden) {
+      parkDetails.userRateHidden = false;
+    }
+    else {
+      parkDetails.userRateHidden = true;
+    }
+  }
+
+  ratePark(rate : number) {
+    this.parkDetails.updateUserStarRatingArray(rate + 1);
+    this.updateParkRating(rate + 1);
+  }
+
+  removeUserRate() {
+    this.parkDetails.updateUserStarRatingArray(0);
+    this.updateParkRating(0);
+  }
+
+  updateParkRating(rate : number) {
+    this.collection = "Parks";
+    // this._dbService.getDocument(this.collection,this.parkDetails.id).then(data => {
+    //   let newPark : Park = new Park();
+    //   newPark.parseToParkModel(data);
+    //   console.log("newPark");
+    //   console.log(newPark);
+    //   this.parkDetails.rating = newPark.rating;
+    //   console.log(this.parkDetails.rating);
+      // if user rate for this park exists
+      if(this.user.ratings.some(r => r.parkId == this.parkDetails.id)) {
+        let userRate = this.user.ratings.find(r => r.parkId == this.parkDetails.id);
+        let userRateIndex = this.user.ratings.indexOf(userRate);
+        console.log(userRateIndex);
+        // if user wants to clear any rate for this park, remove from user rates and from park rates
+        if(rate == 0){
+          console.log("user removing rate for park");
+          this.parkDetails.rating.numberOfRatings = this.parkDetails.rating.numberOfRatings - 1;
+          this.parkDetails.rating.sumOfRateValues = this.parkDetails.rating.sumOfRateValues - userRate.rate;
+          this.user.ratings.splice(userRateIndex,1);
+          console.log(this.user.ratings);
+        }
+        else { // else, update user rates and park rates
+          console.log("user updating rate of park");
+          this.parkDetails.rating.sumOfRateValues = this.parkDetails.rating.sumOfRateValues - userRate.rate + rate;
+          this.user.ratings[userRateIndex].rate = rate;
+          console.log(this.user.ratings);
+        }
+      }
+      else { // if user did not rate before, add rate to park and to user ratings
+        console.log("user adding rate to park");
+        this.parkDetails.rating.numberOfRatings = this.parkDetails.rating.numberOfRatings + 1;
+        this.parkDetails.rating.sumOfRateValues = this.parkDetails.rating.sumOfRateValues + rate;
+        let rating = new Rating();
+        rating.parkId = this.parkDetails.id;
+        rating.rate = rate;
+        this.user.ratings.push(rating);
+        console.log(this.user.ratings);
+      }
+      console.log(this.parkDetails.rating.numberOfRatings);
+      console.log(this.parkDetails.rating.sumOfRateValues);
+      this.updateParkRateDb();
+      this.updateUserRateDb(rate);
+      this.parkDetails.updateParkRating();
+    // })
+    // .catch((er) =>{console.log(er)});    
+  }
+
+  updateParkRateDb(){
+    this.collection = "Parks";
+    let parkRating = {
+      rating: {
+        sumOfRateValues: this.parkDetails.rating.sumOfRateValues,
+        numberOfRatings: this.parkDetails.rating.numberOfRatings
+      }
+    }
+    this._dbService.updateDocument(this.collection, this.parkDetails.id, parkRating);
+  }
+
+  updateUserRateDb(rate: number){
+    this.collection = "Users";
+    let dataObj = JSON.parse(JSON.stringify(this.user.ratings));
+    console.log(dataObj);
+    let user = {
+      userRatings: dataObj
+    }
+
+    this._dbService.updateDocument(this.collection, this.user.email, user);
   }
 
   // facebook share configuration
