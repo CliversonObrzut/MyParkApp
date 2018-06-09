@@ -20,20 +20,26 @@ export class User {
         this.name = docRef.data().name;
         this.imageURL = docRef.data().imageURL;
 
-        docRef.data().favouriteParks.forEach(element => {
-            let park : Park =  new Park();
-            park.id = element.id;
-            this.favouriteParks.push(park);
-        });
-        console.log(this.favouriteParks);
+        if(docRef.data().favouriteParks != undefined) {
+            docRef.data().favouriteParks.forEach(element => {
+                let park : Park =  new Park();
+                park.id = element.id;
+                this.favouriteParks.push(park);
+            });
+            console.log(this.favouriteParks);
+        }
+        
 
-        docRef.data().userRatings.forEach(element => {
-            let rating : Rating = new Rating();
-            rating.parkId = element.parkId;
-            rating.rate = element.rate;
-            this.ratings.push(rating);
-        });
-        console.log(this.ratings);
+        if(docRef.data().userRatings != undefined) {
+            docRef.data().userRatings.forEach(element => {
+                let rating : Rating = new Rating();
+                rating.parkId = element.parkId;
+                rating.rate = element.rate;
+                this.ratings.push(rating);
+            });
+            console.log(this.ratings);
+        }
+        
     }
 
     getName() : string {

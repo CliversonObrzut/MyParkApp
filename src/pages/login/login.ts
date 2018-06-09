@@ -40,11 +40,12 @@ export class LoginPage {
   doLogin() {
     this._authService.emailLogin(this._loginForm.value.email, this._loginForm.value.password)
       .then((user) => {
-         this._utils.showToast('Logged in successfully!');
-         console.log(user+" logged in!");
-         this.navCtrl.setRoot(HomePage);
+         this.setHomePage("with email and password");
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this._utils.showToast(error.message+" Social media account?");
+        console.log(error.message+" Social media account?");
+      });
   }
 
   navForget() {
@@ -62,33 +63,42 @@ export class LoginPage {
         if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
           this.createMyParkUserFromGoogle(credential);
         }
-        this.navCtrl.setRoot(HomePage);
-        this._utils.showToast("Logged in successfully!");
-        console.log("User logged in with Google");
+        else {
+          this.setHomePage("with Google1");
+        }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this._utils.showToast("Account email exists but from different social media");
+        console.log(error.message)
+      });
     } else if (social == 'facebook') {
       this._authService.facebookLogin()
       .then((credential) => {
         if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
           this.createMyParkUserFromFacebook(credential);
         }
-        this.navCtrl.setRoot(HomePage);
-        this._utils.showToast("Logged in successfully!");
-        console.log("User logged in with Facebook");
+        else {
+          this.setHomePage("with Facebook");
+        }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this._utils.showToast("Account email exists but from different social media");
+        console.log(error.message)
+      });
     } else if (social == 'twitter') {
       this._authService.twitterLogin()
       .then((credential) => {
         if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
           this.createMyParkUserFromTwitter(credential);
         }
-        this.navCtrl.setRoot(HomePage);
-        this._utils.showToast("Logged in successfully!");
-        console.log("User logged in with Twitter");
+        else{
+          this.setHomePage("with Twitter");
+        }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this._utils.showToast("Account email exists but from different social media");
+        console.log(error.message)
+      });
     }
   }
 
@@ -102,11 +112,11 @@ export class LoginPage {
       name: username,
       dateCreated: this._authService.getUserCreationDate(),
       favouriteParks: new Array<Park>(),
-      ratings: new Array<Rating>(),
+      userRatings: new Array<Rating>(),
       imageURL: credential.additionalUserInfo.profile.picture
     }
+    this.addParkUserDb(user, email, "with Google2");
 
-    this._dbService.addDocument(this.collection,email,user);
   }
 
   createMyParkUserFromFacebook(credential : any) : void {
@@ -119,11 +129,11 @@ export class LoginPage {
       name: username,
       dateCreated: this._authService.getUserCreationDate(),
       favouriteParks: new Array<Park>(),
-      ratings: new Array<Rating>(),
+      userRatings: new Array<Rating>(),
       imageURL: credential.additionalUserInfo.profile.picture.data.url
     }
 
-    this._dbService.addDocument(this.collection,email,user);
+    this.addParkUserDb(user, email, "with Facebook");
   }
 
   createMyParkUserFromTwitter(credential : any) : void {
@@ -136,10 +146,22 @@ export class LoginPage {
       name: username,
       dateCreated: this._authService.getUserCreationDate(),
       favouriteParks: new Array<Park>(),
-      ratings: new Array<Rating>(),
+      userRatings: new Array<Rating>(),
       imageURL: credential.additionalUserInfo.profile.profile_image_url
     }
 
-    this._dbService.addDocument(this.collection,email,user);
+    this.addParkUserDb(user, email, "with Twitter");
+  }
+
+  addParkUserDb(user : any, email : any, origin : string) {
+    this._dbService.addDocument(this.collection,email,user).then(() => {
+      this.setHomePage(origin);
+    });
+  }
+
+  setHomePage(origin : string){
+    console.log("User logged in " + origin);
+    this.navCtrl.setRoot(HomePage);
+    this._utils.showToast("Logged in successfully!");
   }
 }

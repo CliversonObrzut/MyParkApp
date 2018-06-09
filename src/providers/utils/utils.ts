@@ -9,7 +9,7 @@ export class UtilsProvider {
   showToast(message: string, position?: string) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 3000,
       position: position || 'bottom'
     });
 

@@ -49,6 +49,7 @@ export class HomePage {
       console.log(this._authService.getUserEmail());
       this._dbService.getDocument(this.collection, this._authService.getUserEmail())
       .then(data => {
+        console.log(data.data());
         this.userModel.parseToUserModel(data);
         console.log(this.userModel);
       })

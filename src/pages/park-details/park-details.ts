@@ -1,4 +1,3 @@
-import { Rating } from './../../models/rating';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
@@ -11,6 +10,8 @@ import { Park } from '../../models/park';
 import { Prohibition } from '../../models/prohibition';
 import { Facility } from './../../models/facility';
 import { User } from '../../models/user';
+import { FavouritePark } from './../../models/favourite-park';
+import { Rating } from './../../models/rating';
 
 @IonicPage()
 @Component({
@@ -147,23 +148,52 @@ export class ParkDetailsPage {
     }
   }
 
-  doFavourite(parkDetails : Park) {
-    if(parkDetails.addedToFavourites) {
-      parkDetails.addedToFavourites = false;
-      this.removeFavourite();
+  doFavourite() {
+    this.updateUserObj();
+    this.updateUserFavDb();
+    this.updateParkDetailsObj();
+  }
+
+  updateParkDetailsObj() {
+    if(this.parkDetails.addedToFavourites) {      
+      this.parkDetails.addedToFavourites = false;
     }
     else {
-      parkDetails.addedToFavourites = true;
-      this.addFavourite();
+      this.parkDetails.addedToFavourites = true;
     }
   }
 
-  addFavourite() {
-
+  updateUserObj() {
+    this.collection = "Users";
+    if(this.parkDetails.addedToFavourites) {
+      let userFav = this.user.favouriteParks.find(f => f.id == this.parkDetails.id);
+      let userFavIndex = this.user.favouriteParks.indexOf(userFav);
+      console.log(userFavIndex);
+      this.user.favouriteParks.splice(userFavIndex,1);
+      console.log(this.user.favouriteParks);
+    }
+    else {
+      let park = new Park();
+      park.id = this.parkDetails.id;
+      this.user.favouriteParks.push(park);
+      console.log(this.user.favouriteParks);
+    }
   }
 
-  removeFavourite() {
-
+  updateUserFavDb(){
+    this.collection = "Users";
+    let userFavParks = Array<FavouritePark>();
+    this.user.favouriteParks.forEach(park => {
+      let favPark = new FavouritePark();
+      favPark.id = park.id;
+      userFavParks.push(favPark);
+    });
+    let dataObj = JSON.parse(JSON.stringify(userFavParks));
+    console.log(dataObj);
+    let user = {
+      favouriteParks: dataObj
+    }
+    this._dbService.updateDocument(this.collection, this.user.email, user);
   }
 
   openRate(parkDetails : Park) {
