@@ -47,8 +47,8 @@ export class DbServiceProvider {
   isNewUser(email : string) : boolean {
     let user = this.getDocument("Users", email)
     if(user)
-      return true;
-    return false;
+      return false;
+    return true;
   }
 
   getCurrentTimestamp()

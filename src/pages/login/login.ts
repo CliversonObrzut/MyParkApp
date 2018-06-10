@@ -60,6 +60,8 @@ export class LoginPage {
     if (social == 'google') {
       this._authService.googleLogin()
       .then((credential) => {
+        console.log(credential.additionalUserInfo.profile.email);
+        console.log(this._dbService.isNewUser(credential.additionalUserInfo.profile.email));
         if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
           this.createMyParkUserFromGoogle(credential);
         }
@@ -68,7 +70,7 @@ export class LoginPage {
         }
       })
       .catch(error => {
-        this._utils.showToast("Account email exists but from different social media");
+        this._utils.showToast("Account email exists but from different provider");
         console.log(error.message)
       });
     } else if (social == 'facebook') {
@@ -82,7 +84,7 @@ export class LoginPage {
         }
       })
       .catch(error => {
-        this._utils.showToast("Account email exists but from different social media");
+        this._utils.showToast("Account email exists but from different provider");
         console.log(error.message)
       });
     } else if (social == 'twitter') {
@@ -96,7 +98,7 @@ export class LoginPage {
         }
       })
       .catch(error => {
-        this._utils.showToast("Account email exists but from different social media");
+        this._utils.showToast("Account email exists but from different provider");
         console.log(error.message)
       });
     }
@@ -133,7 +135,7 @@ export class LoginPage {
       imageURL: credential.additionalUserInfo.profile.picture.data.url
     }
 
-    this.addParkUserDb(user, email, "with Facebook");
+    this.addParkUserDb(user, email, "with Facebook2");
   }
 
   createMyParkUserFromTwitter(credential : any) : void {
@@ -150,7 +152,7 @@ export class LoginPage {
       imageURL: credential.additionalUserInfo.profile.profile_image_url
     }
 
-    this.addParkUserDb(user, email, "with Twitter");
+    this.addParkUserDb(user, email, "with Twitter2");
   }
 
   addParkUserDb(user : any, email : any, origin : string) {
