@@ -61,13 +61,17 @@ export class LoginPage {
       this._authService.googleLogin()
       .then((credential) => {
         console.log(credential.additionalUserInfo.profile.email);
-        console.log(this._dbService.isNewUser(credential.additionalUserInfo.profile.email));
-        if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
-          this.createMyParkUserFromGoogle(credential);
-        }
-        else {
-          this.setHomePage("with Google1");
-        }
+        this._dbService.getDocument("Users", credential.additionalUserInfo.profile.email)
+        .then(user => {
+          console.log(user.exists);
+          if(user.exists) {
+            this.setHomePage("with Google");
+          }
+          else {
+            this.createMyParkUserFromGoogle(credential);            
+          }
+        })
+        .catch(err => {console.log(err.message)});
       })
       .catch(error => {
         this._utils.showToast("Account email exists but from different provider");
@@ -76,12 +80,16 @@ export class LoginPage {
     } else if (social == 'facebook') {
       this._authService.facebookLogin()
       .then((credential) => {
-        if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
-          this.createMyParkUserFromFacebook(credential);
-        }
-        else {
-          this.setHomePage("with Facebook");
-        }
+        this._dbService.getDocument("Users", credential.additionalUserInfo.profile.email)
+        .then(user => {
+          if(user.exists) {
+            this.setHomePage("with Facebook");
+          }
+          else {
+            this.createMyParkUserFromFacebook(credential);            
+          }
+        })
+        .catch(err => {console.log(err.message)});
       })
       .catch(error => {
         this._utils.showToast("Account email exists but from different provider");
@@ -90,12 +98,16 @@ export class LoginPage {
     } else if (social == 'twitter') {
       this._authService.twitterLogin()
       .then((credential) => {
-        if(this._dbService.isNewUser(credential.additionalUserInfo.profile.email)) {
-          this.createMyParkUserFromTwitter(credential);
-        }
-        else{
-          this.setHomePage("with Twitter");
-        }
+        this._dbService.getDocument("Users", credential.additionalUserInfo.profile.email)
+        .then(user => {
+          if(user.exists) {
+            this.setHomePage("with Twitter");
+          }
+          else {
+            this.createMyParkUserFromTwitter(credential);            
+          }
+        })
+        .catch(err => {console.log(err.message)});
       })
       .catch(error => {
         this._utils.showToast("Account email exists but from different provider");

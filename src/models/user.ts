@@ -26,7 +26,6 @@ export class User {
                 park.id = element.id;
                 this.favouriteParks.push(park);
             });
-            console.log(this.favouriteParks);
         }
         
 
@@ -37,7 +36,6 @@ export class User {
                 rating.rate = element.rate;
                 this.ratings.push(rating);
             });
-            console.log(this.ratings);
         }
         
     }

@@ -218,31 +218,25 @@ export class ParkDetailsPage {
 
   updateParkRating(rate : number) {
     this.collection = "Parks";
-    // this._dbService.getDocument(this.collection,this.parkDetails.id).then(data => {
-    //   let newPark : Park = new Park();
-    //   newPark.parseToParkModel(data);
-    //   console.log("newPark");
-    //   console.log(newPark);
-    //   this.parkDetails.rating = newPark.rating;
-    //   console.log(this.parkDetails.rating);
+    this._dbService.getDocument(this.collection,this.parkDetails.id).then(data => {
+      let newPark : Park = new Park();
+      newPark.parseToParkModel(data);
+      this.parkDetails.rating = newPark.rating;
       // if user rate for this park exists
       if(this.user.ratings.some(r => r.parkId == this.parkDetails.id)) {
         let userRate = this.user.ratings.find(r => r.parkId == this.parkDetails.id);
         let userRateIndex = this.user.ratings.indexOf(userRate);
-        console.log(userRateIndex);
         // if user wants to clear any rate for this park, remove from user rates and from park rates
         if(rate == 0){
           console.log("user removing rate for park");
           this.parkDetails.rating.numberOfRatings = this.parkDetails.rating.numberOfRatings - 1;
           this.parkDetails.rating.sumOfRateValues = this.parkDetails.rating.sumOfRateValues - userRate.rate;
           this.user.ratings.splice(userRateIndex,1);
-          console.log(this.user.ratings);
         }
         else { // else, update user rates and park rates
           console.log("user updating rate of park");
           this.parkDetails.rating.sumOfRateValues = this.parkDetails.rating.sumOfRateValues - userRate.rate + rate;
           this.user.ratings[userRateIndex].rate = rate;
-          console.log(this.user.ratings);
         }
       }
       else { // if user did not rate before, add rate to park and to user ratings
@@ -253,15 +247,14 @@ export class ParkDetailsPage {
         rating.parkId = this.parkDetails.id;
         rating.rate = rate;
         this.user.ratings.push(rating);
-        console.log(this.user.ratings);
       }
       console.log(this.parkDetails.rating.numberOfRatings);
       console.log(this.parkDetails.rating.sumOfRateValues);
       this.updateParkRateDb();
       this.updateUserRateDb(rate);
       this.parkDetails.updateParkRating();
-    // })
-    // .catch((er) =>{console.log(er)});    
+    })
+    .catch((err) =>{console.log(err.message)});    
   }
 
   updateParkRateDb(){

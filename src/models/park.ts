@@ -34,14 +34,14 @@ export class Park {
         this.images = docRef.data().images;
         this.name = docRef.data().name;
 
-        docRef.data().prohibitions.forEach(element => {
-            let prohibition : Prohibition = new Prohibition();
-            console.log(prohibition);
-            prohibition.parseObjToProhibitionModel(element);
-            console.log(prohibition);
-            this.prohibitions.push(prohibition);
-        });
-        console.log(this.prohibitions);
+        if(docRef.data().prohibitions != undefined) {
+            docRef.data().prohibitions.forEach(element => {
+                let prohibition : Prohibition = new Prohibition();
+                prohibition.parseObjToProhibitionModel(element);
+                this.prohibitions.push(prohibition);
+            });
+            console.log(this.prohibitions);
+        }
         this.rating = docRef.data().rating;
         this.calculateParkRating();
     }

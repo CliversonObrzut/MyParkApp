@@ -50,7 +50,9 @@ export class AuthServiceProvider {
   }
 
   private socialSignIn(provider) {
+    console.log("social sign in");
     if (this.platform.is('cordova')) {
+        console.log("social with cordova");
         return this._authService.auth.signInWithRedirect(provider);
     }
     else {

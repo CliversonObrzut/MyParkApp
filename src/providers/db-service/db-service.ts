@@ -36,19 +36,16 @@ export class DbServiceProvider {
   //   });
   // }
 
+  getUserReference(userDoc : string) {
+    return this._db.collection("Users").doc(userDoc);
+  }
+
   getDocuments(collectionObj : string) : Promise<any> {
     return this._db.collection(collectionObj).get();
   }
   
   getDocument(collectionObj : string, docID : string) : Promise<any> {
     return this._db.collection(collectionObj).doc(docID).get();
-  }
-
-  isNewUser(email : string) : boolean {
-    let user = this.getDocument("Users", email)
-    if(user)
-      return false;
-    return true;
   }
 
   getCurrentTimestamp()
