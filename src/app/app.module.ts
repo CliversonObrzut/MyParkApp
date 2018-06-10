@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -6,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
+import { IonicStorageModule } from '@ionic/storage';
 import { DbServiceProvider } from '../providers/db-service/db-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { UtilsProvider } from '../providers/utils/utils';
@@ -46,6 +46,7 @@ import { SettingsPage } from '../pages/settings/settings';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule

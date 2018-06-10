@@ -3,21 +3,24 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UtilsProvider } from './../providers/utils/utils';
+import { Storage } from '@ionic/storage'
 
 import { AngularFireAuth } from "angularfire2/auth"
-import { WelcomePage } from '../pages/welcome/welcome';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SearchPage } from './../pages/search/search';
 import { FavouritesPage } from './../pages/favourites/favourites';
 import { SettingsPage } from '../pages/settings/settings';
+import { WelcomePage } from './../pages/welcome/welcome';
+
 
 @Component({
   templateUrl: 'app.html'
 })
 
 export class MyApp {
-  rootPage:any = WelcomePage;
+  firstRun : boolean = false;
+  rootPage:any;
   @ViewChild(Nav) nav : Nav;
   activePage : any;
   pages : Array<{title: string, icon: string, component: any}>;
@@ -26,10 +29,9 @@ export class MyApp {
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen, 
     public afAuth : AngularFireAuth,
+    public storage : Storage,
     public _utilsService : UtilsProvider) {
       
-      this.initializeApp();
-
       this.pages = [
         { title: 'Home', icon:'home', component: HomePage },
         { title: 'Search', icon:'search', component: SearchPage },
@@ -37,24 +39,49 @@ export class MyApp {
         { title: 'Settings', icon:'contact',component: SettingsPage},
         { title: 'Log out', icon:'log-out', component: LoginPage}       
       ];
-
-      const authObserver = afAuth.authState.subscribe(user => {
-        if (user) {
-          this.rootPage = HomePage;
-          authObserver.unsubscribe();
-        } else {
-          this.rootPage = LoginPage;
-          authObserver.unsubscribe();
-        }
-      });
       this.activePage = this.pages[0];
+
+      this.storage.ready().then(() => {
+        this.storage.get('first_time').then((val) => {
+          console.log(val);
+          if (val !== null) {
+             console.log('Not app first run');
+             //this._utilsService.showToast("Not app first run");
+          } else {
+             console.log('App first run');
+             this.firstRun = true;
+             this.storage.set('first_time', 'done');
+             //this._utilsService.showToast("App first run");
+          }
+
+          const authObserver = afAuth.authState.subscribe(user => {
+            if (user) {
+              this.rootPage = HomePage;
+              authObserver.unsubscribe();
+            } else {
+              if(this.firstRun === true){
+                this.rootPage = WelcomePage;
+              }
+              else {
+                this.rootPage = LoginPage;
+              }
+              authObserver.unsubscribe();
+            }
+          });
+
+          this.initializeApp();
+        });  
+      });
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });  
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+     })
+     .catch((err) => {
+       console.log(err.message);
+     });
   }
 
   openPage(page) {
@@ -71,11 +98,11 @@ export class MyApp {
      else{
       this.nav.push(page.component);
       this.activePage = page;
-     }    
+     }
   }
 
   checkActivePage(page) {
-    return page ==this.activePage;
+    return page == this.activePage;
   }
 
   doLogout() {
