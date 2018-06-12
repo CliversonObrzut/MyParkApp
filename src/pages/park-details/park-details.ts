@@ -1,5 +1,6 @@
+import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { PreloaderProvider } from './../../providers/utils/preloader';
@@ -14,6 +15,8 @@ import { FavouritePark } from './../../models/favourite-park';
 import { Rating } from './../../models/rating';
 import { ReviewPage } from '../review/review';
 
+declare var google;
+
 @IonicPage()
 @Component({
   selector: 'page-park-details',
@@ -21,6 +24,8 @@ import { ReviewPage } from '../review/review';
 })
 export class ParkDetailsPage {
 
+  @ViewChild('map') mapElement : ElementRef;
+  map : any;
   public parkDetails : Park;
   private collection : string;
   public user : User = new User();
@@ -32,6 +37,7 @@ export class ParkDetailsPage {
     public _dbService : DbServiceProvider, 
     public _authService : AuthServiceProvider,
     private _utilsService : UtilsProvider,
+    public _geolocation : Geolocation,
     private _preloader : PreloaderProvider) {
       this.parkDetails = navParams.data;
     }
@@ -39,8 +45,53 @@ export class ParkDetailsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ParkDetailsPage');
     this._preloader.displayPreloader();
-    this.loadParkDetails();
+    this._platform.ready().then(()=>{
+      this.loadMap();
+      this.loadParkDetails();
+    })
     this._preloader.hidePreloader();
+  }
+
+  loadMap() {
+    this._geolocation.getCurrentPosition().then((position) => {
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      let mapOptions = {
+        center : latLng,
+        zoom : 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.addMarker();
+    })
+    .catch((err) => {
+      console.log(err);
+      this._utilsService.showToast(err.message);
+    }); 
+  }
+
+  addMarker(){ 
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+    });
+   
+    let content = "Your current location";         
+   
+    this.addInfoWindow(marker, content);   
+  }
+
+  addInfoWindow(marker, content){
+ 
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+   
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
+   
   }
 
   loadParkDetails() {

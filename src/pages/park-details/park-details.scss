@@ -30,6 +30,9 @@ page-park-details {
             }
           }
         }
+        ion-card-content {
+          padding: 0;
+        }
         ion-slides {
           height: 200px;
           border: 2px solid color($colors, white);
@@ -44,6 +47,8 @@ page-park-details {
         .map {
           position: relative;
           border: 2px solid color($colors, blue);
+          height:200px;
+          padding:0;
         }
         ion-card-title {
           color: white;

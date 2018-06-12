@@ -82,6 +82,9 @@
                 <string>instagram</string>
             </array>
         </config-file>
+        <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+            <string>This App wants to access your location</string>
+        </edit-config>
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
@@ -89,6 +92,9 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.2.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.0" />
+    <plugin name="cordova-plugin-geolocation" spec="~4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To get your location" />
+    </plugin>
     <engine name="android" spec="7.1.0" />
     <engine name="ios" spec="^4.5.4" />
 </widget>

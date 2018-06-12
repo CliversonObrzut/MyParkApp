@@ -104,9 +104,12 @@
         <ion-card-header text-wrap class="park-full-address">
           {{parkDetails.address.fullAddress}}        
         </ion-card-header>
-        <div class="map">
-          <img src="assets/imgs/advance-card-map-paris.png">
-        </div>
+        <ion-card-content>
+            <ion-row>
+              <ion-col #map col-12 class="map">                
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
         <ion-card-title>
           <ion-row no-padding>
             <ion-col>
