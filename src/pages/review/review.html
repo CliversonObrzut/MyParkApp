@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="blue">
+    <ion-buttons end >
+      <button ion-button (click)="OpenReviewAddPage()">
+        <ion-icon ios="ios-add" md="md-add"></ion-icon>
+     </button>
+    </ion-buttons>
+    <ion-title>Reviews</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="card-background-page">
+  <div *ngIf="availableComments == false" class="commentsNotFound">
+      <h1>No comments added yet!</h1>
+  </div>
+  <div *ngIf="availableComments == true">
+      <ion-card class="insideCard" *ngFor="let comment of parkComments">
+  
+          <ion-card-header>
+            {{comment.name}}
+          </ion-card-header>  
+          <ion-card-content >
+            {{comment.comment}}
+          </ion-card-content>
+          <div class="date">
+              {{comment.date}}
+              <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="comment.date"></ion-datetime>     -->
+          </div>  
+        </ion-card>
+    </div>  
+  </ion-content>
+  

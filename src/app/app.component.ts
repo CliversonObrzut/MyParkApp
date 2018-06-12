@@ -9,9 +9,9 @@ import { AngularFireAuth } from "angularfire2/auth"
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SearchPage } from './../pages/search/search';
-import { FavouritesPage } from './../pages/favourites/favourites';
 import { SettingsPage } from '../pages/settings/settings';
 import { WelcomePage } from './../pages/welcome/welcome';
+import { ProfilePage } from './../pages/profile/profile';
 
 
 @Component({
@@ -35,7 +35,7 @@ export class MyApp {
       this.pages = [
         { title: 'Home', icon:'home', component: HomePage },
         { title: 'Search', icon:'search', component: SearchPage },
-        { title: 'Favourites', icon:'heart',component: FavouritesPage },
+        { title: 'Profile', icon:'heart',component: ProfilePage },
         { title: 'Settings', icon:'contact',component: SettingsPage},
         { title: 'Log out', icon:'log-out', component: LoginPage}       
       ];

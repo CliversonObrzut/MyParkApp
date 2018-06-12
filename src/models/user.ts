@@ -5,7 +5,7 @@ export class User {
 
     id: string;
     userID: string;
-    dateCreated: string;
+    dateCreated: Date;
     email: string;
     favouriteParks? : Array<Park> = [];
     name : string;
@@ -15,7 +15,7 @@ export class User {
     parseToUserModel(docRef : any) {
         this.id = docRef.id;
         this.userID = this.id;
-        this.dateCreated = docRef.data().dateCreated;
+        this.dateCreated = new Date(docRef.data().dateCreated);
         this.email = docRef.data().email;
         this.name = docRef.data().name;
         this.imageURL = docRef.data().imageURL;

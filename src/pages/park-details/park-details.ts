@@ -12,6 +12,7 @@ import { Facility } from './../../models/facility';
 import { User } from '../../models/user';
 import { FavouritePark } from './../../models/favourite-park';
 import { Rating } from './../../models/rating';
+import { ReviewPage } from '../review/review';
 
 @IonicPage()
 @Component({
@@ -55,8 +56,6 @@ export class ParkDetailsPage {
       console.log(this._authService.getUserEmail());
       this._dbService.getDocument(this.collection, this._authService.getUserEmail())
       .then(data => {
-        console.log("returned user!");
-        console.log(data.data());
         this.user.parseToUserModel(data);
         console.log(this.user);
         this.SetUserFavouriteOption();
@@ -146,6 +145,10 @@ export class ParkDetailsPage {
     else {
       prohibition.hiddenRestriction = true;
     }
+  }
+
+  openReviews(){    
+    this.navCtrl.push(ReviewPage, this.parkDetails);
   }
 
   doFavourite() {

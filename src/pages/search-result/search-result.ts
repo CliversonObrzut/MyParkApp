@@ -43,11 +43,13 @@ export class SearchResultPage {
   getSearchedParks() : void {
     this._dbService.getDocuments("Parks")
     .then((data : any) => {
+      console.log(data);
       if(data.length === 0) {
         console.log("Parks collection is empty");
       }
       else { 
         data.forEach(element => {
+          console.log(element.data());
           let park : Park = new Park();
           let filterCount = this.facilitiesFilterList.length;
           let parksFacilityCount = 0;

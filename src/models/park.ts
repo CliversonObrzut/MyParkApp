@@ -9,7 +9,7 @@ import { Rating } from './rating';
 export class Park {
     id?: string;
     address?: Address = new Address();
-    comments? : Array<Comment>;
+    comments? : Array<Comment> = [];
     contact? : Contact;
     description? : string;
     facilities?: Array<Facility>;
@@ -25,8 +25,21 @@ export class Park {
     userRateHidden : boolean = true;
 
     parseToParkModel(docRef : any) {
+        console.log(docRef.data());
         this.id = docRef.id;        
         this.address.parseToAddressModel(docRef.data().address);
+        // if(docRef.data().comments != undefined) {
+        //     docRef.data().comments.forEach(element => {
+        //         let comment : Comment = new Comment();
+        //         console.log(comment);
+        //         console.log(element);
+        //         comment.parseObjToCommentModel(element);
+        //         console.log(comment);
+        //         this.comments.push(comment);
+        //     });
+        // }
+        // console.log(this.comments);
+
         this.comments = docRef.data().comments;
         this.contact = docRef.data().contact;
         this.description = docRef.data().description;
