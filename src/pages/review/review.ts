@@ -22,7 +22,7 @@ export class ReviewPage {
   public parkComments : Array<Comment>;
   public user : User = new User();
   public myDate : string;
-  public availableComments : boolean = true;
+  public availableComments : boolean;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -38,7 +38,10 @@ export class ReviewPage {
     console.log('ionViewDidLoad ReviewPage');
     this._preloader.displayPreloader();
     this.loadUserData();
-    this._preloader.hidePreloader();
+  }
+
+  OpenReviewAddPage() {
+    this.navCtrl.push(ReviewAddPage);
   }
 
   loadUserData() {
@@ -65,11 +68,15 @@ export class ReviewPage {
       park.parseToParkModel(docRef);
       console.log(park);
       this.parkComments = park.comments;
+      console.log(this.parkComments);
+      console.log(this.parkComments.length);
       if(this.parkComments.length == 0) {
         this.availableComments = false;
+        this._utilsService.showToast("No reviews! Be the first to add one!");
       }
       else {
         this.availableComments = true;
+        console.log(this.availableComments);
         this.parkComments.forEach(comment => {
           comment.dateNotString = new Date(comment.date);
         })
@@ -83,17 +90,24 @@ export class ReviewPage {
           }
           return 0;
         });
-
+        console.log(this.parkComments);
         this.parkComments.forEach(comment => {
-          comment.date = comment.dateNotString.toISOString();
+          comment.date = this.convertToDisplayFormat(comment.dateNotString);
         });
+        console.log(this.parkComments);
       }
+      this._preloader.hidePreloader();
     })
     .catch(err => {console.log(err.message)});
   }
 
-  OpenReviewAddPage() {
-    this.navCtrl.push(ReviewAddPage);
+  convertToDisplayFormat(date : Date) : string {
+    let month : string = date.toLocaleDateString("en-au", {month: "short"});
+    let dateString = month.replace(/\./g, "");
+    dateString = dateString + ", " + date.getDate();
+    dateString = dateString + " " + date.getFullYear();
+    dateString = dateString + " " + date.getHours();
+    dateString = dateString + ":" + date.getMinutes();
+    return dateString;
   }
-
 }

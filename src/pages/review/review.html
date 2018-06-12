@@ -10,10 +10,10 @@
 </ion-header>
 
 <ion-content class="card-background-page">
-  <div *ngIf="availableComments == false" class="commentsNotFound">
+  <div *ngIf="availableComments === false" class="commentsNotFound">
       <h1>No comments added yet!</h1>
   </div>
-  <div *ngIf="availableComments == true">
+  <div *ngIf="availableComments === true">
       <ion-card class="insideCard" *ngFor="let comment of parkComments">
   
           <ion-card-header>
@@ -24,7 +24,7 @@
           </ion-card-content>
           <div class="date">
               {{comment.date}}
-              <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="comment.date"></ion-datetime>     -->
+              <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="comment.date"></ion-datetime> -->
           </div>  
         </ion-card>
     </div>  

@@ -11,10 +11,10 @@
   </ion-header>
 
 <ion-content class="card-background-page">
-    <div *ngIf="parksFiltered.length == 0" class="parksNotFound">
+    <div *ngIf="isParksFound === false" class="parksNotFound">
         <h1>No Parks Found!</h1>
     </div>
-    <div *ngIf="parksFiltered.length > 0">
+    <div *ngIf="isParksFound === true">
       <ion-list *ngFor="let park of parksFiltered">
         <ion-card >
           <div class="img">

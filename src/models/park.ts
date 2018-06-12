@@ -40,7 +40,12 @@ export class Park {
         // }
         // console.log(this.comments);
 
-        this.comments = docRef.data().comments;
+        if(docRef.data().comments != undefined){
+            this.comments = docRef.data().comments;
+        }
+        else {
+            this.comments = [];
+        }        
         this.contact = docRef.data().contact;
         this.description = docRef.data().description;
         this.facilities = docRef.data().facilities;
