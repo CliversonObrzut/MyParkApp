@@ -1,18 +1,22 @@
-<!--
-  Generated template for the ReviewAddPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>ReviewAdd</ion-title>
-  </ion-navbar>
-
+    <ion-navbar color="blue">    
+      <ion-title>Add Review</ion-title>
+    </ion-navbar>
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content padding scroll="false" class="card-background-page">
+    <form [formGroup]="addReviewForm" (ngSubmit)="sendReview()">
+      <ion-card>     
+          <ion-card-header>
+              {{park.name}}
+            </ion-card-header>  
+            <ion-card-content  class="insideCard">
+                <ion-textarea formControlName="review" class="textarea" rows="5" type="text" text-wrap  placeholder="Write a review"></ion-textarea>
+            </ion-card-content>        
+      </ion-card>
+      <div padding>
+        <button ion-button block color="yellow" full>Submit</button>
+      </div>
+  </form>
 </ion-content>
+    

@@ -1,10 +1,9 @@
 export class Comment {
     comment? : string;
     date? : string;
-    dateNotString : Date = new Date();
+    dateNotString : Date;
     userId? : string;
     name? : string;
-    noComments : boolean = false;
 
     // parseObjToCommentModel(docRef : any) {
     //     this.comment = docRef.data().comment;

@@ -34,14 +34,21 @@ export class ReviewPage {
     console.log(this.park);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ReviewPage');
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad ReviewPage');
+  //   this._preloader.displayPreloader();
+  //   this.loadUserData();
+  // }
+
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter ReviewPage');
     this._preloader.displayPreloader();
     this.loadUserData();
   }
 
   OpenReviewAddPage() {
-    this.navCtrl.push(ReviewAddPage);
+    console.log(this.park);
+    this.navCtrl.push(ReviewAddPage, this.park);
   }
 
   loadUserData() {
@@ -81,15 +88,20 @@ export class ReviewPage {
           comment.dateNotString = new Date(comment.date);
         })
         console.log(this.parkComments);
-        this.parkComments = park.comments.sort((obj1, obj2) => {
-          if(obj1.dateNotString > obj2.dateNotString){
-            return 1;
-          }
-          if(obj2.dateNotString < obj2.dateNotString){
-            return -1;
-          }
-          return 0;
-        });
+        if(this.parkComments.length > 1)
+        {
+          console.log("more than 1 comment");
+          let parkCommentsSorted = park.comments.sort((obj1, obj2) => {
+            if(obj1.dateNotString > obj2.dateNotString){
+              return -1;
+            }
+            if(obj2.dateNotString < obj2.dateNotString){
+              return 1;
+            }
+            return 0;
+          });
+          this.parkComments = parkCommentsSorted;
+        }
         console.log(this.parkComments);
         this.parkComments.forEach(comment => {
           comment.date = this.convertToDisplayFormat(comment.dateNotString);
