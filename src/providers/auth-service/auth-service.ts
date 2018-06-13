@@ -61,6 +61,12 @@ export class AuthServiceProvider {
     }
   }
 
+  // Return the list of registered providers for the given email.
+  // If the email was not registered, the provider's array length will be 0.
+  getProvidersForEmail(email : string) : Promise<any> {
+    return this._authService.auth.fetchProvidersForEmail(email);
+  }
+
   // Email / Password Registration
   emailSignUp(email:string, password:string) : Promise<any> {
     return this._authService.auth.createUserWithEmailAndPassword(email, password);

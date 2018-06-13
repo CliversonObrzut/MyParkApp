@@ -1,3 +1,4 @@
+import { Map } from './../../models/map';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -16,6 +17,8 @@ import { Rating } from './../../models/rating';
 import { ReviewPage } from '../review/review';
 
 declare var google;
+let map : any;
+let mapData : Map = new Map();
 
 @IonicPage()
 @Component({
@@ -25,10 +28,11 @@ declare var google;
 export class ParkDetailsPage {
 
   @ViewChild('map') mapElement : ElementRef;
-  map : any;
+  //public map : any;
   public parkDetails : Park;
   private collection : string;
   public user : User = new User();
+  //public mapData : Map = new Map();
 
   constructor(public navParams : NavParams,
     public navCtrl: NavController,
@@ -46,52 +50,10 @@ export class ParkDetailsPage {
     console.log('ionViewDidLoad ParkDetailsPage');
     this._preloader.displayPreloader();
     this._platform.ready().then(()=>{
-      this.loadMap();
       this.loadParkDetails();
+      this.loadMap();
     })
     this._preloader.hidePreloader();
-  }
-
-  loadMap() {
-    this._geolocation.getCurrentPosition().then((position) => {
-      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-      let mapOptions = {
-        center : latLng,
-        zoom : 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      this.addMarker();
-    })
-    .catch((err) => {
-      console.log(err);
-      this._utilsService.showToast(err.message);
-    }); 
-  }
-
-  addMarker(){ 
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: this.map.getCenter()
-    });
-   
-    let content = "Your current location";         
-   
-    this.addInfoWindow(marker, content);   
-  }
-
-  addInfoWindow(marker, content){
- 
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
-   
-    google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
-    });
-   
   }
 
   loadParkDetails() {
@@ -380,76 +342,192 @@ export class ParkDetailsPage {
     });
   }
 
-    // Twitter share configuration
-    twitterShare(parkDetails : Park) {
-      let url : string = parkDetails.contact.officialWebsite;
-      let message : string = "Check this Park features! It is awsome!";
-  
-      if(this._platform.is("ios")) {
-        this.socialSharing.canShareVia('com.apple.social.twitter',message, null, null, url).then(() =>  {
-          this.twitterSharing(message, url);
-        })
-        .catch(() =>  {
-          this._utilsService.showToast("Twitter not available");
-        })
-      }
-      else if(this._platform.is("android")) {
-        this.socialSharing.canShareVia('twitter',message,null,null,url).then(() => {
-          this.twitterSharing(message, url);
-        })
-        .catch(() => {
-          this._utilsService.showToast("Twitter not available!");
-        });
-      }
-      else {
-        console.error("Twitter share not available in this platform");
-        this._utilsService.showToast("Share not supported in this platform");
-      }
+  // Twitter share configuration
+  twitterShare(parkDetails : Park) {
+    let url : string = parkDetails.contact.officialWebsite;
+    let message : string = "Check this Park features! It is awsome!";
+
+    if(this._platform.is("ios")) {
+      this.socialSharing.canShareVia('com.apple.social.twitter',message, null, null, url).then(() =>  {
+        this.twitterSharing(message, url);
+      })
+      .catch(() =>  {
+        this._utilsService.showToast("Twitter not available");
+      })
     }
-  
-    twitterSharing(message : string, url : string) {
-      this.socialSharing.shareViaTwitter(message, null , url).then(() => {
-        console.log("shareViaTwitter: Success");
-        this._utilsService.showToast("Sharing Success!");
-      }).catch((er) => {
-        console.error("shareViaTwitter: failed");
-        this._utilsService.showToast("Sharing failed!");
+    else if(this._platform.is("android")) {
+      this.socialSharing.canShareVia('twitter',message,null,null,url).then(() => {
+        this.twitterSharing(message, url);
+      })
+      .catch(() => {
+        this._utilsService.showToast("Twitter not available!");
       });
     }
-
-    // Instagram share configuration
-    instagramShare(parkDetails : Park) {
-      let image : string = parkDetails.images[0].imageURL;
-
-      if(this._platform.is("ios")) {
-        this.socialSharing.canShareVia('instagram', null, null, image, null).then(() =>  {
-          this.instagramSharing(image);
-        })
-        .catch(() => {
-          this._utilsService.showToast("Instagram not available");
-        });
-      }
-      else if(this._platform.is("android")) {
-        this.socialSharing.canShareVia('instagram', null, null, image, null).then(() => {
-          this.instagramSharing(image);
-        })
-        .catch(() => {
-          this._utilsService.showToast("Instagram not available!");
-        });
-      }
-      else {
-        console.error("Instagram share not available in this platform");
-        this._utilsService.showToast("Share not supported in this platform");
-      }
+    else {
+      console.error("Twitter share not available in this platform");
+      this._utilsService.showToast("Share not supported in this platform");
     }
-  
-    instagramSharing(image : string) {
-        this.socialSharing.shareViaInstagram(null, image).then(() => {
-        console.log("shareViaInstagram: Success");
-        this._utilsService.showToast("Sharing Success!");
-      }).catch((er) => {
-        console.error("shareViaInstagram: failed");
-        this._utilsService.showToast("Sharing failed!");
+  }
+
+  twitterSharing(message : string, url : string) {
+    this.socialSharing.shareViaTwitter(message, null , url).then(() => {
+      console.log("shareViaTwitter: Success");
+      this._utilsService.showToast("Sharing Success!");
+    }).catch((er) => {
+      console.error("shareViaTwitter: failed");
+      this._utilsService.showToast("Sharing failed!");
+    });
+  }
+  // Instagram share configuration
+  instagramShare(parkDetails : Park) {
+    let image : string = parkDetails.images[0].imageURL;
+    if(this._platform.is("ios")) {
+      this.socialSharing.canShareVia('instagram', null, null, image, null).then(() =>  {
+        this.instagramSharing(image);
+      })
+      .catch(() => {
+        this._utilsService.showToast("Instagram not available");
       });
     }
+    else if(this._platform.is("android")) {
+      this.socialSharing.canShareVia('instagram', null, null, image, null).then(() => {
+        this.instagramSharing(image);
+      })
+      .catch(() => {
+        this._utilsService.showToast("Instagram not available!");
+      });
+    }
+    else {
+      console.error("Instagram share not available in this platform");
+      this._utilsService.showToast("Share not supported in this platform");
+    }
+  }
+
+  instagramSharing(image : string) {
+      this.socialSharing.shareViaInstagram(null, image).then(() => {
+      console.log("shareViaInstagram: Success");
+      this._utilsService.showToast("Sharing Success!");
+    }).catch((er) => {
+      console.error("shareViaInstagram: failed");
+      this._utilsService.showToast("Sharing failed!");
+    });
+  }
+
+  // mapServiceCallback(results, status) {
+  //   console.log(status);
+  //   console.log(google.maps.places.PlacesServiceStatus.OK);
+  //   if(status == google.maps.places.PlacesServiceStatus.OK){
+  //     console.log(results[0].place_id);
+  //     let placeId = results[0].place_id;
+  //     console.log(results.length);
+  //     console.log(placeId);
+  //     console.log(mapData);
+  //     console.log(map);
+  //     let serv = new google.maps.places.PlacesService(map);
+  //     console.log(serv);
+  //     serv.getDetails({placeId: placeId},(place, status) => {
+  //       console.log(status);
+  //       console.log(google.maps.places.PlacesServiceStatus.OK)
+  //       if(status == google.maps.places.PlacesServiceStatus.OK) {
+  //         mapData.parkMapLocation = place;
+  //         console.log(mapData.parkMapLocation);
+  //         //this.addMarker();
+  //       }
+  //     });
+  //   }
+  //   else {
+  //     console.log("Status not Ok");
+  //   }
+  // }
+
+  loadMap() {
+    this._geolocation.getCurrentPosition().then((position) => {
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      mapData.userMapLatLng = latLng;
+      let mapOptions = {
+        center : latLng,
+        zoom : 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      console.log(map);
+      
+      this.findParkMapPosition();
+    })
+    .catch((err) => {
+      console.log(err);
+      this._utilsService.showToast(err.message);
+    }); 
+  }
+  
+  findParkMapPosition(){
+    let request = {
+      fields: ['formatted_address','name','geometry','id','place_id'],
+      query: this.parkDetails.address.fullAddress
+    }
+    console.log(request);
+    let service = new google.maps.places.PlacesService(map);
+    service.findPlaceFromQuery(request, (results, status) => {
+      if(status == google.maps.places.PlacesServiceStatus.OK){
+        mapData.parkMapLocation = results[0].geometry.location;
+        console.log(mapData.parkMapLocation);
+        this.addParkMarker();
+      }
+      else {
+        console.log("Status not Ok");
+      }
+    });
+  }
+
+  public addParkMarker(){ 
+    let marker = new google.maps.Marker({
+      map: map,
+      animation: google.maps.Animation.DROP,
+      //position: this.map.getCenter()
+      position: mapData.parkMapLocation
+    });
+    map.setCenter(mapData.parkMapLocation); 
+   
+    this.addParkInfoWindow(marker);   
+  }
+
+  public addParkInfoWindow(marker){
+    let place = mapData.parkMapLocation;
+    place.name = this.parkDetails.name;
+    place.formatted_address = this.parkDetails.address.fullAddress;
+    let content : string = "<div><strong>" + place.name + "</strong><br>" +
+    place.formatted_address + "</div>";
+
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+   
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(map, marker);
+    });     
+  }
+
+  public addUserMarker(){ 
+    let marker = new google.maps.Marker({
+      map: map,
+      animation: google.maps.Animation.DROP,
+      //position: this.map.getCenter()
+      position: mapData.userMapLatLng
+    });
+    map.setCenter(mapData.userMapLatLng); 
+   
+    this.addUserInfoWindow(marker);   
+  }
+
+  public addUserInfoWindow(marker){
+    let content : string = "Your current position";
+
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+   
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(map, marker);
+    });     
+  }
 }

@@ -38,14 +38,35 @@ export class LoginPage {
   }
 
   doLogin() {
-    this._authService.emailLogin(this._loginForm.value.email, this._loginForm.value.password)
-      .then((user) => {
-         this.setHomePage("with email and password");
-      })
-      .catch(error => {
-        this._utils.showToast(error.message+" Social media account?");
-        console.log(error.message+" Social media account?");
-      });
+    this._authService.getProvidersForEmail(this._loginForm.value.email)
+    .then(providers => {
+      console.log(providers);
+      if(providers.length > 0) {        
+        this._authService.emailLogin(this._loginForm.value.email, this._loginForm.value.password)
+        .then((user) => {
+           this.setHomePage("with email and password");
+        })
+        .catch(error => {
+          let providersText : string = ""; 
+          providers.forEach(provider => {
+            providersText = providersText + " " + provider;
+          });
+          if(providers.some(p => p === "password")) {
+            this._utils.showToast("Invalid Password!");
+            console.log("Login attempt with invalid password!");
+          }
+          else {
+            this._utils.showToast("Account created with: "+providersText);
+            console.log("Password login attempt for account(s) from: "+providersText);
+          }          
+        });
+      }
+      else {
+        this._utils.showToast("There is no account for the given email");
+        console.log("Invalid email account for login");
+      }
+    })
+    .catch(err => {console.log(err.message)});
   }
 
   navForget() {
@@ -74,7 +95,8 @@ export class LoginPage {
         .catch(err => {console.log(err.message)});
       })
       .catch(error => {
-        this._utils.showToast("Account email exists but from different provider");
+        //this._utils.showToast("Account email exists but from different provider");
+        this._utils.showToast(error.message);
         console.log(error.message)
       });
     } else if (social == 'facebook') {
@@ -92,7 +114,8 @@ export class LoginPage {
         .catch(err => {console.log(err.message)});
       })
       .catch(error => {
-        this._utils.showToast("Account email exists but from different provider");
+        //this._utils.showToast("Account email exists but from different provider");
+        this._utils.showToast(error.message);
         console.log(error.message)
       });
     } else if (social == 'twitter') {
@@ -110,7 +133,8 @@ export class LoginPage {
         .catch(err => {console.log(err.message)});
       })
       .catch(error => {
-        this._utils.showToast("Account email exists but from different provider");
+        //this._utils.showToast("Account email exists but from different provider");
+        this._utils.showToast(error.message);
         console.log(error.message)
       });
     }
