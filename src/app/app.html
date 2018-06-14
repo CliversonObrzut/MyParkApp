@@ -1,12 +1,12 @@
 <ion-menu [content]="content" side="right">
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Menu</ion-title>
+        <ion-header class="menu-style">
+          <ion-toolbar class="menu-style">
+            <ion-title class="menu-style">Menu</ion-title>
           </ion-toolbar>
         </ion-header>
       
-        <ion-content>
-          <ion-list>
+        <ion-content class="menu-style">
+          <ion-list class="menu-style">
             <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)"[class.active]="checkActivePage(p)">
                 <ion-icon name="{{p.icon}}"></ion-icon>
               {{p.title}}

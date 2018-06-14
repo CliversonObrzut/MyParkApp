@@ -18,7 +18,7 @@ export class User {
         this.dateCreated = new Date(docRef.data().dateCreated);
         this.email = docRef.data().email;
         this.name = docRef.data().name;
-        this.imageURL = docRef.data().imageURL;
+        //this.imageURL = docRef.data().imageURL;
 
         if(docRef.data().favouriteParks != undefined) {
             docRef.data().favouriteParks.forEach(element => {

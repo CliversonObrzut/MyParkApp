@@ -50,10 +50,10 @@ export class ParkDetailsPage {
     console.log('ionViewDidLoad ParkDetailsPage');
     this._preloader.displayPreloader();
     this._platform.ready().then(()=>{
-      this.loadParkDetails();
       this.loadMap();
+      this.loadParkDetails();
     })
-    this._preloader.hidePreloader();
+    //this._preloader.hidePreloader();
   }
 
   loadParkDetails() {
@@ -144,6 +144,7 @@ export class ParkDetailsPage {
         });
       });
       this.parkDetails.prohibitions = parkProhibitions;
+      this._preloader.hidePreloader();
     }
     catch {
       console.log("Error iterating in prohibitions list");
@@ -459,7 +460,7 @@ export class ParkDetailsPage {
       this._utilsService.showToast(err.message);
     }); 
   }
-  
+
   findParkMapPosition(){
     let request = {
       fields: ['formatted_address','name','geometry','id','place_id'],
@@ -480,10 +481,11 @@ export class ParkDetailsPage {
   }
 
   public addParkMarker(){ 
+    let image = "./../../assets/icon/MyParkIco.png";
     let marker = new google.maps.Marker({
       map: map,
       animation: google.maps.Animation.DROP,
-      //position: this.map.getCenter()
+      icon: image,
       position: mapData.parkMapLocation
     });
     map.setCenter(mapData.parkMapLocation); 

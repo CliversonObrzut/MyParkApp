@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
 import { DbServiceProvider } from "../../providers/db-service/db-service";
 import { PreloaderProvider } from './../../providers/utils/preloader';
-import { SearchPage } from './../search/search';
 import { SearchResultPage } from '../search-result/search-result';
 import { Facility } from './../../models/facility';
 import { User } from './../../models/user';
@@ -130,9 +129,5 @@ export class HomePage {
       //let test : string = facility.name;
       //test = test.replace(/\s/g, '');
       console.log("searched pressed!");
-    }
-
-    openSearchPage() {
-      this.navCtrl.push(SearchPage)
     }
 }

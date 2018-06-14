@@ -8,7 +8,6 @@ import { Storage } from '@ionic/storage'
 import { AngularFireAuth } from "angularfire2/auth"
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { SearchPage } from './../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
 import { WelcomePage } from './../pages/welcome/welcome';
 import { ProfilePage } from './../pages/profile/profile';
@@ -32,15 +31,17 @@ export class MyApp {
     public storage : Storage,
     public _utilsService : UtilsProvider) {
       
+      // object used to render the menu and give the proper navigation between pages
       this.pages = [
         { title: 'Home', icon:'home', component: HomePage },
-        { title: 'Search', icon:'search', component: SearchPage },
-        { title: 'Profile', icon:'heart',component: ProfilePage },
-        { title: 'Settings', icon:'contact',component: SettingsPage},
+        { title: 'Profile', icon:'contact',component: ProfilePage },
+        { title: 'Settings', icon:'settings',component: SettingsPage},
         { title: 'Log out', icon:'log-out', component: LoginPage}       
       ];
       this.activePage = this.pages[0];
 
+      // read the local storage to identify if it is the first
+      // run of the app after installation.
       this.storage.ready().then(() => {
         this.storage.get('first_time').then((val) => {
           console.log(val);
@@ -48,21 +49,26 @@ export class MyApp {
              console.log('Not app first run');
              //this._utilsService.showToast("Not app first run");
           } else {
+            // if the was the first run it will create a register in the local storage
              console.log('App first run');
              this.firstRun = true;
              this.storage.set('first_time', 'done');
              //this._utilsService.showToast("App first run");
           }
 
+          // observer to check if user is authenticated
           const authObserver = afAuth.authState.subscribe(user => {
             if (user) {
+              // if user is authenticated return Home page
               this.rootPage = HomePage;
               authObserver.unsubscribe();
             } else {
+              // if user is not authenticated and it is first run, it will return Welcome Screen
               if(this.firstRun === true){
                 this.rootPage = WelcomePage;
               }
               else {
+                // if user is not authenticated and it is not the first run, it will return Login Page
                 this.rootPage = LoginPage;
               }
               authObserver.unsubscribe();
@@ -73,7 +79,9 @@ export class MyApp {
         });  
       });
   }
-
+  ///
+  /// It removes the splash screen to display the first app page.
+  ///
   initializeApp() {
     this.platform.ready().then(() => {
         this.statusBar.styleDefault();
@@ -84,6 +92,9 @@ export class MyApp {
      });
   }
 
+  // 
+  // Open the right page when selected from the side menu.
+  // 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -100,11 +111,16 @@ export class MyApp {
       this.activePage = page;
      }
   }
-
+  // 
+  // return true or false when checking if the current page is the active page.
+  // 
   checkActivePage(page) {
     return page == this.activePage;
   }
 
+  // 
+  // Executes the log out function from the option inside the side menu.
+  // 
   doLogout() {
     this.afAuth.auth.signOut()
       .then(() => {

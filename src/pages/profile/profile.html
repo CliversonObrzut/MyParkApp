@@ -1,18 +1,47 @@
-<!--
-  Generated template for the ProfilePage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Profile</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+    <ion-navbar color="blue">
+      <ion-title>Profile</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  <ion-content class="background-page">
+         <!-- Profile Cover Page -->
+         <div class="support-nav col-md-3">
+          <div class="panel">
+            <div class="user-heading round">
+              <a href="#">
+                <img  [src]="user.imageURL">
+              </a>
+              <p style="color: #ffffff;">{{user.name}} </p>
+            </div>
+          </div>
+        </div>
+        <ion-list-header color="blue" text-center>
+          FAVOURITE PARKS
+        </ion-list-header>
+        <div *ngIf="userHasFavourites === false">
+            No Favourites
+        </div>
+        <div *ngIf="userHasFavourites === true">
+            <ion-list *ngFor="let park of favouriteParks">  
+                <ion-item>
+                  <ion-thumbnail item-start>
+                    <img [src]="park.images[0].imageURL">
+                  </ion-thumbnail>
+                  <h2>{{park.name}}</h2>
+                  <p>{{park.address.suburb}} {{park.address.state}} * {{park.address.postCode}}</p>
+                  <!-- <p>Alexandria NSW • 2015</p> -->
+                  <ion-icon clear item-end name="trash" color="danger" (click)="removeFavPark(park.id)"></ion-icon>
+                </ion-item>
+            </ion-list>
+        </div>
+        
+  </ion-content>
+  
+      
+          
+         
+  
+  

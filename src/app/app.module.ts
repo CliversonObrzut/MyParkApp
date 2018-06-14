@@ -25,7 +25,6 @@ import { ForgetPage } from '../pages/forget/forget';
 import { RegisterPage } from '../pages/register/register';
 import { SearchResultPage } from '../pages/search-result/search-result';
 import { ParkDetailsPage } from './../pages/park-details/park-details';
-import { SearchPage } from './../pages/search/search';
 import { SettingsPage } from '../pages/settings/settings';
 import { ReviewPage } from '../pages/review/review';
 import { ProfilePage } from '../pages/profile/profile';
@@ -42,7 +41,6 @@ import { ReviewAddPage } from './../pages/review-add/review-add';
     RegisterPage,
     SearchResultPage,
     ParkDetailsPage,
-    SearchPage,
     SettingsPage,
     ReviewPage,
     ReviewAddPage,
@@ -66,7 +64,6 @@ import { ReviewAddPage } from './../pages/review-add/review-add';
     RegisterPage,
     SearchResultPage,
     ParkDetailsPage,
-    SearchPage,
     SettingsPage,
     ReviewPage,
     ReviewAddPage,

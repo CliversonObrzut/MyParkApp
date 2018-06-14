@@ -60,7 +60,7 @@ export class RegisterPage {
       dateCreated: this._authService.getUserCreationDate(),
       favouriteParks: new Array<Park>(),
       ratings: new Array<Rating>(),
-      imageURL: "https://i.pinimg.com/originals/0e/ca/cf/0ecacf1245c5e8c723414ea1a19407cf.jpg"
+      imageURL: "./../../assets/imgs/default_avatar.jpg"
     }
 
     this._dbService.addDocument(this.collection,email,user);

@@ -13,4 +13,9 @@ page-register {
       //background-color: transparent;
       background: rgba(255, 255, 255, 0.7);
     }
+
+    .button-style {
+      border-radius: 10px;
+      border: 2px solid color($colors, white);
+    }
 }

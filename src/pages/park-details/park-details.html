@@ -34,7 +34,7 @@
             </div>
           </div>
         </ion-card-header>
-          <ion-slides>
+          <ion-slides text-center autoplay="2000" loop="true" pager="true">
             <ion-slide  *ngFor="let image of parkDetails.images; let i:index">
               <ion-row>
                 <ion-col col-12 class="img">
@@ -44,7 +44,7 @@
             </ion-slide>
           </ion-slides>
           <ion-card-title text-wrap>
-            {{parkDetails.address.suburb}}  -  12 Km away
+            {{parkDetails.address.suburb}}
           </ion-card-title>
         <!-- <ion-item actions>
           <span ion-text item-start color="secondary" class="item-bold">18 min</span>
@@ -57,7 +57,7 @@
     
       </ion-card>
     
-      <ion-row no-padding>
+      <ion-row class="fav-rev-rate-buttons" no-padding>
         <ion-col text-center>
           <button class="action-button" (click)="openReviews()" ion-button small round icon-start>
             <ion-icon name='chatboxes'></ion-icon>

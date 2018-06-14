@@ -6,7 +6,8 @@ page-park-details {
         border-radius: 0px;
         background: none;
         box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
-        margin: 10px 10px 0px 10px;
+        margin: 10px auto 0px auto;
+        max-width: 600px;
         .park-name {
           font-size: 1.6rem;
         }
@@ -42,6 +43,7 @@ page-park-details {
         }
         .img {
           position: relative;
+          //width: 100%;
           padding: 0px;          
         }
         .map {
@@ -124,5 +126,9 @@ page-park-details {
           color: color($colors,danger);
         }
       }
+    }
+    .fav-rev-rate-buttons {
+      max-width: 600px;
+      margin: auto;
     }
   }
