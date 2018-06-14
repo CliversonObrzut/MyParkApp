@@ -26,6 +26,15 @@ export class AuthServiceProvider {
     return this._authService.auth.currentUser.photoURL;
   }
 
+  setUserImage(imageURL : string) {
+    let profile = {
+      displayName: this._authService.auth.currentUser.displayName,
+      photoURL: imageURL
+    }
+    console.log(profile);
+    this._authService.auth.currentUser.updateProfile(profile);
+  }
+
   getUserEmail() : string {
     return this._authService.auth.currentUser.email;
   }

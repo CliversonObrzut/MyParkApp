@@ -5,6 +5,7 @@ import { DbServiceProvider } from '../../providers/db-service/db-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { PreloaderProvider } from '../../providers/utils/preloader';
 import { Park } from '../../models/park';
+import { FavouritePark } from '../../models/favourite-park';
 
 @IonicPage()
 @Component({
@@ -40,6 +41,8 @@ export class ProfilePage {
     this._dbService.getDocument(this.collection, this._authService.getUserEmail())
     .then(data => {
       this.user.parseToUserModel(data);
+      console.log(this.user.imageURL);
+      console.log(this._authService.getUserImage());
       this.user.imageURL = this._authService.getUserImage();
       this.loadUserFavourites();
     })
@@ -55,8 +58,7 @@ export class ProfilePage {
     }
     else {
       this.collection = "Parks";
-      let favParks : Array<Park> = new Array<Park>();
-      this.userHasFavourites = true;
+      let favParks : Array<Park> = new Array<Park>();      
       this.user.favouriteParks.forEach(favPark => {      
         this._dbService.getDocument(this.collection,favPark.id).then(result => {
           let park : Park = new Park();
@@ -69,11 +71,39 @@ export class ProfilePage {
         });
       });
       this.favouriteParks = favParks;
-      this._preloader.hidePreloader();
+      this.userHasFavourites = true;      
     }
+    this._preloader.hidePreloader();
   }
 
   removeFavPark(parkId : string) {
     console.log("removing "+ parkId);
+    this.updateFavouriteParksObj(parkId);
+    this.updateUserFavDb();
+  }
+
+  updateFavouriteParksObj(parkId : string) {
+    this.collection = "Users";
+    let userFav = this.favouriteParks.find(f => f.id == parkId);
+    let userFavIndex = this.favouriteParks.indexOf(userFav);
+    this.favouriteParks.splice(userFavIndex,1);
+    if(this.favouriteParks.length == 0){
+      this.userHasFavourites = false;
+    }
+  }
+
+  updateUserFavDb(){
+    this.collection = "Users";
+    let userFavParks = Array<FavouritePark>();
+    this.favouriteParks.forEach(park => {
+      let favPark = new FavouritePark();
+      favPark.id = park.id;
+      userFavParks.push(favPark);
+    });
+    let dataObj = JSON.parse(JSON.stringify(userFavParks));
+    let user = {
+      favouriteParks: dataObj
+    }
+    this._dbService.updateDocument(this.collection, this.user.email, user);
   }
 }

@@ -481,11 +481,9 @@ export class ParkDetailsPage {
   }
 
   public addParkMarker(){ 
-    let image = "./../../assets/icon/MyParkIco.png";
     let marker = new google.maps.Marker({
       map: map,
       animation: google.maps.Animation.DROP,
-      icon: image,
       position: mapData.parkMapLocation
     });
     map.setCenter(mapData.parkMapLocation); 

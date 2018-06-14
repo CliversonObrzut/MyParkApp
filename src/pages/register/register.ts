@@ -53,16 +53,15 @@ export class RegisterPage {
     this.collection = "Users";
     let email = this.registerForm.value.email;
     let username = this.registerForm.value.username;
-
+    let imageURL: "https://firebasestorage.googleapis.com/v0/b/mypark-5778d.appspot.com/o/default_avatar.jpg?alt=media&token=143941e1-520c-46c1-bb53-e7c6aa7e1225";
     let user = {
       email: email,
       name: username,
       dateCreated: this._authService.getUserCreationDate(),
       favouriteParks: new Array<Park>(),
-      ratings: new Array<Rating>(),
-      imageURL: "./../../assets/imgs/default_avatar.jpg"
+      ratings: new Array<Rating>()
     }
-
     this._dbService.addDocument(this.collection,email,user);
+    this._authService.setUserImage(imageURL);
   }
 }

@@ -61,6 +61,19 @@ page-profile {
       .ion_header{
         margin: 0;
       }
+
+      .list-header {
+        border-top: none;
+      }
+
+      .favNotFound {
+        position: absolute;
+        text-align: center;
+        color: #fff;
+        font-size: 10pt;
+        font-weight: bold;
+        width: 100%;
+      }
     
   }
   

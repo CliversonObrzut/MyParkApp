@@ -12,16 +12,16 @@
           <div class="panel">
             <div class="user-heading round">
               <a href="#">
-                <img  [src]="user.imageURL">
+                <img [src]="user.imageURL">
               </a>
-              <p style="color: #ffffff;">{{user.name}} </p>
+              <p>{{user.name}}</p>
             </div>
           </div>
         </div>
         <ion-list-header color="blue" text-center>
           FAVOURITE PARKS
         </ion-list-header>
-        <div *ngIf="userHasFavourites === false">
+        <div class="favNotFound" *ngIf="userHasFavourites === false">
             No Favourites
         </div>
         <div *ngIf="userHasFavourites === true">
