@@ -64,12 +64,18 @@
             Review
           </button>
         </ion-col>
-        <ion-col text-center>
+        <ion-col text-center *ngIf="parkDetails.userRateHidden === true">
           <button class="action-button" (click)="openRate(parkDetails)"  ion-button small round icon-start>
             <ion-icon name='star-half'></ion-icon>
             Rate
           </button>
-        </ion-col>    
+        </ion-col>
+        <ion-col text-center *ngIf="parkDetails.userRateHidden === false">
+          <button class="action-button rate" (click)="openRate(parkDetails)"  ion-button small round icon-start>
+            <ion-icon name='star-half'></ion-icon>
+            Rate
+          </button>
+        </ion-col>       
         <ion-col text-center *ngIf="parkDetails.addedToFavourites === false">
           <button class="action-button" (click)="doFavourite(parkDetails)" ion-button small round icon-start>
             <ion-icon name='heart'></ion-icon>
@@ -112,18 +118,24 @@
           </ion-card-content>
         <ion-card-title>
           <ion-row no-padding>
-            <ion-col>
+            <!-- <ion-col text-center>
                 <span ion-text item-end clear color="secondary" class="item-bold">26 min</span>
             </ion-col>
-            <ion-col>
+            <ion-col text-center>
                 <span ion-text clear color="subtle">(8.1 mi)</span>
+            </ion-col> -->
+            <ion-col text-center>
+              <button class="map-action-button" color="secondary" (click)="getDirections()" ion-button small round icon-start>
+                <ion-icon name='navigate'></ion-icon>
+                Directions
+              </button>
             </ion-col>
-            <ion-col>
+            <!-- <ion-col class="map-button">
                 <button ion-button color="secondary" clear icon-start>
                     <ion-icon name='navigate'></ion-icon>
                     Start
                   </button>
-            </ion-col>
+            </ion-col> -->
           </ion-row>
             <!-- <span ion-text item-start color="secondary" class="item-bold">26 min</span>
             <span ion-text item-start color="subtle">(8.1 mi)</span>
@@ -136,7 +148,7 @@
     
       <ion-list no-border>    
         <ion-list-header text-center>
-          Facilities
+          FACILITIES
         </ion-list-header>    
         <ion-item *ngFor="let facility of parkDetails.facilities">
             <div class="fac-pro-ico">
@@ -152,7 +164,7 @@
     
      <ion-list no-border>    
         <ion-list-header text-center>
-          Prohibitions
+          PROHIBITIONS
         </ion-list-header>    
         <ion-item *ngFor="let prohibition of parkDetails.prohibitions">
             <div class="fac-pro-ico">

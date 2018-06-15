@@ -52,11 +52,17 @@ page-park-details {
           height:200px;
           padding:0;
         }
+
         ion-card-title {
           color: white;
           font-size: 1.4rem;
         
           ion-row {
+            .map-button {
+              height: 50px;
+              float: right;
+            }
+
             ion-col {
               width: 100%;
               height: 100%;
@@ -86,6 +92,8 @@ page-park-details {
         ion-list-header {
           background-color: #488aff;
           color: white;
+          border-top: none;
+          margin-bottom: 0px;
         }
         ion-item {
           background-color: #393937;
@@ -105,6 +113,14 @@ page-park-details {
           max-width: 100px;
           background-color: yellow;
           color: black;
+        }
+        .map-action-button {
+          max-width: 100px;
+          background-color: color($colors, secondary);
+          color: black;
+        }
+        .rate {
+          background-color: #488aff;
         }
         .user-stars {
           background: grey;

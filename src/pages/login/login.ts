@@ -168,7 +168,7 @@ export class LoginPage {
       dateCreated: this._authService.getUserCreationDate(),
       favouriteParks: new Array<Park>(),
       userRatings: new Array<Rating>(),
-      imageURL: credential.additionalUserInfo.profile.picture.data.url
+      imageURL: this._authService.getUserImage()
     }
 
     this.addParkUserDb(user, email, "with Facebook2");

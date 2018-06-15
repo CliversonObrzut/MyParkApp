@@ -530,4 +530,8 @@ export class ParkDetailsPage {
       infoWindow.open(map, marker);
     });     
   }
+
+  getDirections() {
+    
+  }
 }

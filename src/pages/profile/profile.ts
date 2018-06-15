@@ -41,9 +41,6 @@ export class ProfilePage {
     this._dbService.getDocument(this.collection, this._authService.getUserEmail())
     .then(data => {
       this.user.parseToUserModel(data);
-      console.log(this.user.imageURL);
-      console.log(this._authService.getUserImage());
-      this.user.imageURL = this._authService.getUserImage();
       this.loadUserFavourites();
     })
     .catch(err => {
