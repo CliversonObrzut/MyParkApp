@@ -6,6 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { PreloaderProvider } from '../../providers/utils/preloader';
 import { Park } from '../../models/park';
 import { FavouritePark } from '../../models/favourite-park';
+import { ParkDetailsPage } from '../park-details/park-details';
 
 @IonicPage()
 @Component({
@@ -27,7 +28,7 @@ export class ProfilePage {
       
     }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     console.log('ionViewDidLoad ProfilePage');
     this._preloader.displayPreloader();
     this._platform.ready().then(()=>{
@@ -55,7 +56,10 @@ export class ProfilePage {
     }
     else {
       this.collection = "Parks";
-      let favParks : Array<Park> = new Array<Park>();      
+      this.favouriteParks = [];
+      console.log(this.favouriteParks);
+      console.log(this.user.favouriteParks);
+      let favParks : Array<Park> = new Array<Park>();        
       this.user.favouriteParks.forEach(favPark => {      
         this._dbService.getDocument(this.collection,favPark.id).then(result => {
           let park : Park = new Park();
@@ -71,6 +75,10 @@ export class ProfilePage {
       this.userHasFavourites = true;      
     }
     this._preloader.hidePreloader();
+  }
+
+  openParkDetails(park : Park) {
+    this.navCtrl.push(ParkDetailsPage, park);
   }
 
   removeFavPark(parkId : string) {

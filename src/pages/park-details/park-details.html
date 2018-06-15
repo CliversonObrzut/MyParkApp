@@ -181,4 +181,31 @@
             </ion-item>
         </ion-item>
       </ion-list>   
+
+      <ion-list no-border>    
+        <ion-list-header text-center>
+          CONTACT
+        </ion-list-header>    
+        <ion-item text-wrap>
+          <div>Opening Hours: {{parkDetails.contact.openingHours}}</div>
+        </ion-item>
+        <ion-item text-wrap>
+          <div>Email: <a href="mailto:{{parkDetails.contact.email}}">{{parkDetails.contact.email}}</a></div>
+        </ion-item>
+        <ion-item text-wrap>
+          <div>Phone: {{parkDetails.contact.telephone}}</div>
+        </ion-item>
+        <ion-item text-wrap>
+          <div><a [href]="parkDetails.contact.officialWebsite">Official Website</a></div>
+        </ion-item>
+      </ion-list>
+
+      <ion-list no-border>    
+        <ion-list-header text-center>
+          EXTRA INFORMATION
+        </ion-list-header>    
+        <ion-item text-wrap>
+          <div>{{parkDetails.description}}</div>
+        </ion-item>
+      </ion-list>
   </ion-content>

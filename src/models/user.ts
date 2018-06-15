@@ -21,13 +21,13 @@ export class User {
         this.imageURL = docRef.data().imageURL;
 
         if(docRef.data().favouriteParks != undefined) {
+            this.favouriteParks = [];
             docRef.data().favouriteParks.forEach(element => {
                 let park : Park =  new Park();
                 park.id = element.id;
                 this.favouriteParks.push(park);
             });
-        }
-        
+        }        
 
         if(docRef.data().userRatings != undefined) {
             docRef.data().userRatings.forEach(element => {

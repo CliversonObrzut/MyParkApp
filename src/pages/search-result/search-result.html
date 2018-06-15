@@ -12,7 +12,7 @@
 
 <ion-content class="card-background-page">
     <div *ngIf="isParksFound === false" class="parksNotFound">
-        <h1>No Parks Found!</h1>
+        No Parks Found!
     </div>
     <div *ngIf="isParksFound === true">
       <ion-list *ngFor="let park of parksFiltered">

@@ -26,7 +26,7 @@
         </div>
         <div *ngIf="userHasFavourites === true">
             <ion-list *ngFor="let park of favouriteParks">  
-                <ion-item>
+                <ion-item (click)="openParkDetails(park)">
                   <ion-thumbnail item-start>
                     <img [src]="park.images[0].imageURL">
                   </ion-thumbnail>

@@ -11,7 +11,7 @@
 
 <ion-content class="card-background-page">
   <div *ngIf="availableComments === false" class="commentsNotFound">
-      <h1>No comments added yet!</h1>
+      No reviews added!
   </div>
   <div *ngIf="availableComments === true">
       <ion-card class="insideCard" *ngFor="let comment of parkComments">
