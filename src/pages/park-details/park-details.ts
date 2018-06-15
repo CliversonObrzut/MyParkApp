@@ -28,11 +28,9 @@ let mapData : Map = new Map();
 export class ParkDetailsPage {
 
   @ViewChild('map') mapElement : ElementRef;
-  //public map : any;
   public parkDetails : Park;
   private collection : string;
   public user : User = new User();
-  //public mapData : Map = new Map();
 
   constructor(public navParams : NavParams,
     public navCtrl: NavController,
@@ -53,7 +51,6 @@ export class ParkDetailsPage {
       this.loadMap();
       this.loadParkDetails();
     })
-    //this._preloader.hidePreloader();
   }
 
   loadParkDetails() {
@@ -214,7 +211,6 @@ export class ParkDetailsPage {
   }
 
   openRate(parkDetails : Park) {
-    //parkDetails.updateUserStarRatingArray(3);
     if(parkDetails.userRateHidden) {
       parkDetails.userRateHidden = false;
     }
@@ -265,10 +261,8 @@ export class ParkDetailsPage {
         rating.rate = rate;
         this.user.ratings.push(rating);
       }
-      console.log(this.parkDetails.rating.numberOfRatings);
-      console.log(this.parkDetails.rating.sumOfRateValues);
       this.updateParkRateDb();
-      this.updateUserRateDb(rate);
+      this.updateUserRateDb();
       this.parkDetails.updateParkRating();
     })
     .catch((err) =>{console.log(err.message)});    
@@ -285,7 +279,7 @@ export class ParkDetailsPage {
     this._dbService.updateDocument(this.collection, this.parkDetails.id, parkRating);
   }
 
-  updateUserRateDb(rate: number){
+  updateUserRateDb(){
     this.collection = "Users";
     let dataObj = JSON.parse(JSON.stringify(this.user.ratings));
     console.log(dataObj);
@@ -327,7 +321,7 @@ export class ParkDetailsPage {
     this.socialSharing.shareViaFacebook(null, image , url).then(() => {
       console.log("shareViaFacebook: Success");
       this._utilsService.showToast("Sharing Success!");
-    }).catch((er) => {
+    }).catch(() => {
       console.error("shareViaFacebook: failed");
       this._utilsService.showToast("Sharing failed!");
     });
@@ -337,7 +331,7 @@ export class ParkDetailsPage {
     this.socialSharing.shareViaFacebook(null, null , url).then(() => {
       console.log("shareViaFacebook: Success");
       this._utilsService.showToast("Sharing Success!");
-    }).catch((er) => {
+    }).catch(() => {
       console.error("shareViaFacebook: failed");
       this._utilsService.showToast("Sharing failed!");
     });
@@ -346,7 +340,7 @@ export class ParkDetailsPage {
   // Twitter share configuration
   twitterShare(parkDetails : Park) {
     let url : string = parkDetails.contact.officialWebsite;
-    let message : string = "Check this Park features! It is awsome!";
+    let message : string = "Check this Park features! It is awesome!";
 
     if(this._platform.is("ios")) {
       this.socialSharing.canShareVia('com.apple.social.twitter',message, null, null, url).then(() =>  {
@@ -379,6 +373,7 @@ export class ParkDetailsPage {
       this._utilsService.showToast("Sharing failed!");
     });
   }
+
   // Instagram share configuration
   instagramShare(parkDetails : Park) {
     let image : string = parkDetails.images[0].imageURL;
@@ -414,33 +409,7 @@ export class ParkDetailsPage {
     });
   }
 
-  // mapServiceCallback(results, status) {
-  //   console.log(status);
-  //   console.log(google.maps.places.PlacesServiceStatus.OK);
-  //   if(status == google.maps.places.PlacesServiceStatus.OK){
-  //     console.log(results[0].place_id);
-  //     let placeId = results[0].place_id;
-  //     console.log(results.length);
-  //     console.log(placeId);
-  //     console.log(mapData);
-  //     console.log(map);
-  //     let serv = new google.maps.places.PlacesService(map);
-  //     console.log(serv);
-  //     serv.getDetails({placeId: placeId},(place, status) => {
-  //       console.log(status);
-  //       console.log(google.maps.places.PlacesServiceStatus.OK)
-  //       if(status == google.maps.places.PlacesServiceStatus.OK) {
-  //         mapData.parkMapLocation = place;
-  //         console.log(mapData.parkMapLocation);
-  //         //this.addMarker();
-  //       }
-  //     });
-  //   }
-  //   else {
-  //     console.log("Status not Ok");
-  //   }
-  // }
-
+  // load map section
   loadMap() {
     this._geolocation.getCurrentPosition().then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -511,7 +480,6 @@ export class ParkDetailsPage {
     let marker = new google.maps.Marker({
       map: map,
       animation: google.maps.Animation.DROP,
-      //position: this.map.getCenter()
       position: mapData.userMapLatLng
     });
     map.setCenter(mapData.userMapLatLng); 
@@ -521,17 +489,15 @@ export class ParkDetailsPage {
 
   public addUserInfoWindow(marker){
     let content : string = "Your current position";
-
     let infoWindow = new google.maps.InfoWindow({
       content: content
-    });
-   
+    });   
     google.maps.event.addListener(marker, 'click', () => {
       infoWindow.open(map, marker);
     });     
   }
 
   getDirections() {
-    
+    // todo
   }
 }

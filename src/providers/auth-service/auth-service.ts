@@ -4,17 +4,27 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from "rxjs/Observable";
 import firebase from "firebase";
 
+/**
+ * Class for Firebase Firestore database activities
+ * @author Cliverson
+ * Date: 13/04/2018
+ * @version 1.0
+ */
 @Injectable()
 export class AuthServiceProvider {
 
   private user: Observable<firebase.User>;  
 
-  constructor(private _authService : AngularFireAuth, 
+  constructor(
+    private _authService : AngularFireAuth, 
     private platform : Platform) {
-    console.log('Hello AuthServiceProvider Provider');
-        this.user = _authService.authState;
+      console.log('Hello AuthServiceProvider Provider');
+      this.user = _authService.authState;
   }
 
+  /**
+   * Returns if the user is authenticated or not
+   */
   isAuthenticated() : boolean {
     if(this.user !== null) {
       return true;
@@ -22,47 +32,60 @@ export class AuthServiceProvider {
     return false;
   }
 
+  /**
+   * Returns the current user image from Firebase Authentication Service
+   */
   getUserImage() : string {
     return this._authService.auth.currentUser.photoURL;
   }
 
-  setUserImage(imageURL : string) {
-    let profile = {
-      displayName: this._authService.auth.currentUser.displayName,
-      photoURL: imageURL
-    }
-    console.log(profile);
-    this._authService.auth.currentUser.updateProfile(profile);
-  }
-
+  /**
+   * Returns the current user email from Firebase Authentication Service
+   */
   getUserEmail() : string {
     return this._authService.auth.currentUser.email;
   }
 
+  /**
+   * Returns the creation date of the current user
+   */
   getUserCreationDate() : string {
     return this._authService.auth.currentUser.metadata.creationTime;
   }
 
+  /**
+   * Selects the Google provider for Login
+   */
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
     return this.socialSignIn(provider);
   }
 
+  /**
+   * Selects the Facebook provider for Login
+   */
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider()
     return this.socialSignIn(provider);
   }
 
+  /**
+   * Selects the Twitter provider for Login
+   */
   twitterLogin() {
     const provider = new firebase.auth.TwitterAuthProvider()
     return this.socialSignIn(provider);
   }
 
+  /**
+   * Executes the Login with the given social account provider
+   * @param provider 
+   */
   private socialSignIn(provider) {
     console.log("social sign in");
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('cordova')) { // if running in a IOS or Android device
         console.log("social with cordova");
-        return this._authService.auth.signInWithRedirect(provider);
+        return this._authService.auth.signInWithRedirect(provider); // sign in with redirect
     }
     else {
         // It will work only in browser
@@ -70,28 +93,44 @@ export class AuthServiceProvider {
     }
   }
 
-  // Return the list of registered providers for the given email.
-  // If the email was not registered, the provider's array length will be 0.
+  /**
+   * Returns the list of registered providers for the given email.
+   * If no providers, the list will be empty.
+   * @param email 
+   */
   getProvidersForEmail(email : string) : Promise<any> {
     return this._authService.auth.fetchProvidersForEmail(email);
   }
 
-  // Email / Password Registration
+  /**
+   * Registers users with Email and Password
+   * @param email 
+   * @param password 
+   */
   emailSignUp(email:string, password:string) : Promise<any> {
     return this._authService.auth.createUserWithEmailAndPassword(email, password);
   }
   
-  // Email / Password Authentication //
+  /**
+   * Login user with email and password
+   * @param email 
+   * @param password 
+   */
   emailLogin(email:string, password:string) : Promise<any> {
      return this._authService.auth.signInWithEmailAndPassword(email, password);
   }
 
-  // Sends email allowing user to reset password
+  /**
+   * Sends an email to user to reset the password
+   * @param email 
+   */
   resetPassword(email: string) : Promise<void> {
     return this._authService.auth.sendPasswordResetEmail(email);
   }
 
-  // Sign Out
+  /**
+   * Signs out the user
+   */
   signOut() : Promise<void> {
     return this._authService.auth.signOut();
   }

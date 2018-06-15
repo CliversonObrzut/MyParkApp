@@ -10,10 +10,10 @@ This is the official MyPark demo app, showcasing a variety of Ionic Framework co
 * Forgot Password Page
 * Home Page 
 * Search Result Page
-* Detail Park Search
-* Search Page
+* Detail Park Page
 * Review Page
-* Favourites Page
+* Add Review Page
+* Profile Page
 * Settings Page
 
 

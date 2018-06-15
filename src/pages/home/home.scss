@@ -15,7 +15,6 @@ page-home {
     margin-bottom: 5px;
   }
     .card-background-page {
-        //margin-top: 20px;
         background-color: #393937;
         ion-card {
           position: relative;
@@ -27,14 +26,6 @@ page-home {
             max-width: 800px;
             height: 110px;
           }
-
-          // .img-bg {
-          //   background-image:black;
-          //   width: 800px;
-          //   height: 110px;
-          //   background-position: center;
-          //   position: relative;
-          // }
     
           .card-title {
             position: absolute;
@@ -52,8 +43,7 @@ page-home {
             top: 52%;
             width: 100%;
             color: #fff;
-          }
-     
+          }     
         
           .background {
           background-size: 100% auto;
@@ -81,14 +71,6 @@ page-home {
         border: 5px solid color($colors, danger);
         .img {
           opacity: 0.8;
-          //filter: blur(5px);
-          //filter: sepia(100%);
-          //filter: grayscale(100%);
-          //filter: brightness(200%);
-          //filter: contrast(200%);
-          //filter: drop-shadow(8px 8px 10px, white);
-          //filter: hue-rotate(90deg);
-          //filter: saturate(800%);
         }
         .card-title {
           color: color($colors,danger);

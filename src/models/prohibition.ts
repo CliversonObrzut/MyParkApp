@@ -1,3 +1,6 @@
+/**
+ * Prohibition Class Model for park prohibition information
+ */
 export class Prohibition {
     id?: string = "";
     name?: string = "";

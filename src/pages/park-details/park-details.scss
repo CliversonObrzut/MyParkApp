@@ -43,7 +43,6 @@ page-park-details {
         }
         .img {
           position: relative;
-          //width: 100%;
           padding: 0px;          
         }
         .map {
@@ -74,10 +73,6 @@ page-park-details {
           color: white;
         }
       }
-      // ion-item {
-      //   background-color: #393937;
-      //   color: white;
-      // }
     
       button[fab].fab-map {
         top: calc(100% - 20px);

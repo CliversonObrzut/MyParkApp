@@ -1,6 +1,9 @@
 import { Park } from './park';
 import { Rating } from './rating';
 
+/**
+ * User Class Model for holding user information
+ */
 export class User {
 
     id: string;
@@ -50,25 +53,5 @@ export class User {
 
     getImage() : string {
         return this.imageURL;
-    }
-    
-    addFavoritePark(parkID : string) {
-        // todo:
-    }
-
-    removeFavoritePark(parkID : string) {
-        // todo
-    }
-
-    addParkRate(parkID : string, rate : number) {
-        // todo:
-    }
-
-    removeParkRate(parkID : string) {
-        // todo:
-    }
-
-    updateParkRate(parkID : string, newRate : number) {
-        // todo:
     }
 }

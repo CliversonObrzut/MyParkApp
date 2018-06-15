@@ -43,10 +43,10 @@ export class LoginPage {
       console.log(providers);
       if(providers.length > 0) {        
         this._authService.emailLogin(this._loginForm.value.email, this._loginForm.value.password)
-        .then((user) => {
+        .then(() => {
            this.setHomePage("with email and password");
         })
-        .catch(error => {
+        .catch(() => {
           let providersText : string = ""; 
           providers.forEach(provider => {
             providersText = providersText + " " + provider;
@@ -95,7 +95,6 @@ export class LoginPage {
         .catch(err => {console.log(err.message)});
       })
       .catch(error => {
-        //this._utils.showToast("Account email exists but from different provider");
         this._utils.showToast(error.message);
         console.log(error.message)
       });
@@ -114,7 +113,6 @@ export class LoginPage {
         .catch(err => {console.log(err.message)});
       })
       .catch(error => {
-        //this._utils.showToast("Account email exists but from different provider");
         this._utils.showToast(error.message);
         console.log(error.message)
       });
@@ -133,7 +131,6 @@ export class LoginPage {
         .catch(err => {console.log(err.message)});
       })
       .catch(error => {
-        //this._utils.showToast("Account email exists but from different provider");
         this._utils.showToast(error.message);
         console.log(error.message)
       });

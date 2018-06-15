@@ -1,3 +1,6 @@
+/**
+ * Class for Model Address of Park
+ */
 export class Address {
     suburb? : string = "";
     fullAddress?: string = "";
@@ -5,6 +8,10 @@ export class Address {
     state? : string = "";
     street? : string = "";
 
+    /**
+     * Converts a document object from Firebase to Address Model object
+     * @param docRef 
+     */
     parseToAddressModel(docRef : any) {
         this.suburb = docRef.suburb;
         this.fullAddress = docRef.fullAddress;

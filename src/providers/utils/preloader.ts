@@ -7,42 +7,38 @@ import 'rxjs/add/operator/map';
 /**
 * Class for the Preloader provider.
 * @author Cliverson
-* Date: 24/04/2018
+* Date: 19/04/2018
 * @version 1.0 
 */ 
 
 @Injectable()
 export class PreloaderProvider {
 
-   private loading : any;
+  private loading : any;
 
-   constructor(public loadingCtrl: LoadingController,
+  constructor(public loadingCtrl: LoadingController,
               private _utils : UtilsProvider){ }
 
-   displayPreloader() : void{
-     try{
-       
+  // displays the preloader for user when the page is loading data
+  displayPreloader() : void{
+    try {       
       this.loading = this.loadingCtrl.create({
-          content: 'Please wait..'
+          content: 'Please wait..' // message with the spinner
       });
-      this.loading.present();
-
-     }catch(e){
+      this.loading.present(); // show preloader
+    }
+    catch(e) {
       this._utils.showToast(e);
     }
-
   }
 
-
-
-   hidePreloader() : void{
-    try{
-    
-      this.loading.dismiss();
-    
-    }catch(e){
+  // Hides the preloader from the screen
+  hidePreloader() : void {
+    try {    
+      this.loading.dismiss();    
+    }
+    catch(e) {
       this._utils.showToast(e);
     }
-   }
-
+  }
 }

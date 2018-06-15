@@ -32,13 +32,7 @@ export class SearchResultPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchResultPage');
     this._preloader.displayPreloader();
-    this.getSearchedParks();
-    //this.getUserData();
-   
-  }
-
-  ionViewCanEnter(){
-
+    this.getSearchedParks();   
   }
 
   getSearchedParks() : void {

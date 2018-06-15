@@ -46,14 +46,6 @@
           <ion-card-title text-wrap>
             {{parkDetails.address.suburb}}
           </ion-card-title>
-        <!-- <ion-item actions>
-          <span ion-text item-start color="secondary" class="item-bold">18 min</span>
-          <span ion-text item-start color="subtle">(2.6 mi)</span>
-          <button ion-button color="primary" clear item-end icon-start>
-            <ion-icon name='navigate'></ion-icon>
-            Start
-          </button>
-        </ion-item> -->
     
       </ion-card>
     
@@ -98,7 +90,6 @@
                 </div>
                 <div style="display:block">
                   <button class="action-button" (click)="removeUserRate()"  ion-button small round icon-start>
-                    <!-- <ion-icon name='star-half'></ion-icon> -->
                     Clear
                   </button>
                 </div>
@@ -118,31 +109,13 @@
           </ion-card-content>
         <ion-card-title>
           <ion-row no-padding>
-            <!-- <ion-col text-center>
-                <span ion-text item-end clear color="secondary" class="item-bold">26 min</span>
-            </ion-col>
-            <ion-col text-center>
-                <span ion-text clear color="subtle">(8.1 mi)</span>
-            </ion-col> -->
             <ion-col text-center>
               <button class="map-action-button" color="secondary" (click)="getDirections()" ion-button small round icon-start>
                 <ion-icon name='navigate'></ion-icon>
                 Directions
               </button>
             </ion-col>
-            <!-- <ion-col class="map-button">
-                <button ion-button color="secondary" clear icon-start>
-                    <ion-icon name='navigate'></ion-icon>
-                    Start
-                  </button>
-            </ion-col> -->
           </ion-row>
-            <!-- <span ion-text item-start color="secondary" class="item-bold">26 min</span>
-            <span ion-text item-start color="subtle">(8.1 mi)</span>
-            <button ion-button color="secondary" clear item-end icon-start>
-              <ion-icon name='navigate'></ion-icon>
-              Start
-            </button> -->
         </ion-card-title>    
       </ion-card>
     

@@ -35,14 +35,6 @@ export class HomePage {
       this._preloader.hidePreloader();
     }
     
-    ionViewCanEnter(){
-
-    }
-
-    // ionViewDidEnter() {
-    //   this.getFacilities();
-    // }
-  
     getUserData() : void {
       this.collection = "Users";
       console.log(this._authService.getUserEmail());
@@ -62,7 +54,6 @@ export class HomePage {
           console.log("Facilities collection is empty");
         }
         else {
-          //this.documents = data;
           data.forEach(document => {
             let facility : Facility = new Facility();
             facility.parseToFacilityModel(document);
@@ -126,8 +117,6 @@ export class HomePage {
   
     search() {
       this.navCtrl.push(SearchResultPage, this.filterList);
-      //let test : string = facility.name;
-      //test = test.replace(/\s/g, '');
       console.log("searched pressed!");
     }
 }

@@ -6,6 +6,9 @@ import { ParkImage } from './park-image';
 import { Facility } from './facility';
 import { Rating } from './rating';
 
+/**
+ * Park Class Model for Park Information
+ */
 export class Park {
     id?: string;
     address?: Address = new Address();
@@ -28,24 +31,14 @@ export class Park {
         console.log(docRef.data());
         this.id = docRef.id;        
         this.address.parseToAddressModel(docRef.data().address);
-        // if(docRef.data().comments != undefined) {
-        //     docRef.data().comments.forEach(element => {
-        //         let comment : Comment = new Comment();
-        //         console.log(comment);
-        //         console.log(element);
-        //         comment.parseObjToCommentModel(element);
-        //         console.log(comment);
-        //         this.comments.push(comment);
-        //     });
-        // }
-        // console.log(this.comments);
 
         if(docRef.data().comments != undefined){
             this.comments = docRef.data().comments;
         }
         else {
             this.comments = [];
-        }        
+        }
+
         this.contact = docRef.data().contact;
         this.description = docRef.data().description;
         this.facilities = docRef.data().facilities;
@@ -124,7 +117,6 @@ export class Park {
                 this.userStarRatingArray.push("star-outline");
             }
         }
-
     }
 }
 

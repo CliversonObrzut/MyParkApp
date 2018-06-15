@@ -1,3 +1,7 @@
+
+/**
+ * Review Model
+ */
 export class Comment {
     comment? : string;
     date? : string;

@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 
+/**
+ * Class for Firebase Firestore database activities
+ * @author Cliverson
+ * Date: 13/04/2018
+ * @version 1.0
+ */
+
 @Injectable()
 export class DbServiceProvider {
 
@@ -11,52 +18,37 @@ export class DbServiceProvider {
     console.log('Hello DbServiceProvider Provider');
   }
 
-    /*
-   * Return documents from specific database collection
-   */
-  // getDocuments(collectionObj: string) : Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this._db.collection(collectionObj).get()
-  //     .then((querySnapshot) => {        
-  //       let obj : any = [];
-  //       querySnapshot.forEach((doc: any) => {
-  //         if (collectionObj === "Facilities") {
-  //           obj.push({
-  //               id             : doc.id,
-  //               name           : doc.data().name,
-  //               imageURL       : doc.data().imageURL
-  //             });
-  //           }
-  //       });
-  //       resolve(obj);
-  //     })
-  //     .catch((error : any) => {
-  //       reject(error);
-  //     });
-  //   });
-  // }
-
+  /**
+   * Get the reference to a specific user inside the Users collection
+   */    
   getUserReference(userDoc : string) {
     return this._db.collection("Users").doc(userDoc);
   }
 
+  /**
+   * Get all the documents from a given collection
+   */
   getDocuments(collectionObj : string) : Promise<any> {
     return this._db.collection(collectionObj).get();
   }
   
+  /**
+   * Get a specific document from a given collection
+   */
   getDocument(collectionObj : string, docID : string) : Promise<any> {
     return this._db.collection(collectionObj).doc(docID).get();
   }
 
-  getCurrentTimestamp()
-  {
+  /**
+   * Get the current timestamp from the Firebase server
+   */
+  getCurrentTimestamp() {
     return this._db.FieldValue.serverTimestamp();
   }
 
   /**
    * Add a new document to a selected database collection
    */
-
   addDocument(collectionObj : string,
     docID : string,
     dataObj : any) : Promise<any>{
@@ -74,7 +66,6 @@ export class DbServiceProvider {
   /**
   * Delete an existing document from a selected database collection
   */
-
   deleteDocument(collectionObj : string,
           docID : string) : Promise<any>{
     return new Promise((resolve, reject) => {
@@ -92,7 +83,6 @@ export class DbServiceProvider {
   /**
   * Update an existing document within a selected database collection
   */
-
   updateDocument(collectionObj : string,
             docID : string,
             dataObj : any) : Promise<any>{

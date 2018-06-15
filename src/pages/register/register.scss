@@ -4,13 +4,11 @@ page-register {
       background: url('../assets/imgs/bench-building-colors.jpg') no-repeat center
         center fixed;
       filter: grayscale(50%);
-      // filter: opacity(80%);
       -webkit-background-size: cover;
       -moz-background-size: cover;
       background-size: cover;
     }
     .item.item-input {
-      //background-color: transparent;
       background: rgba(255, 255, 255, 0.7);
     }
 

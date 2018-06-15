@@ -12,6 +12,12 @@ import { SettingsPage } from '../pages/settings/settings';
 import { WelcomePage } from './../pages/welcome/welcome';
 import { ProfilePage } from './../pages/profile/profile';
 
+/**
+ * Main class of the App
+ * @author Cliverson
+ * Date: 08/05/2018
+ * @version 2.3
+ */
 
 @Component({
   templateUrl: 'app.html'
@@ -79,9 +85,10 @@ export class MyApp {
         });  
       });
   }
-  ///
-  /// It removes the splash screen to display the first app page.
-  ///
+
+  /**
+   * It removes the splash screen to display the first app page.
+   */
   initializeApp() {
     this.platform.ready().then(() => {
         this.statusBar.styleDefault();
@@ -92,9 +99,10 @@ export class MyApp {
      });
   }
 
-  // 
-  // Open the right page when selected from the side menu.
-  // 
+  /**
+   * Open the given page when selected from the side menu.
+   * @param page 
+   */
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -108,19 +116,21 @@ export class MyApp {
      }
      else{
       this.nav.push(page.component);
-      this.activePage = page;
+      this.activePage = this.pages[0];
      }
   }
-  // 
-  // return true or false when checking if the current page is the active page.
-  // 
+
+  /**
+   * Returns if the current page is the active page.
+   * @param page 
+   */
   checkActivePage(page) {
     return page == this.activePage;
   }
 
-  // 
-  // Executes the log out function from the option inside the side menu.
-  // 
+  /**
+   * Executes the log out function from the option inside the side menu.
+   */
   doLogout() {
     this.afAuth.auth.signOut()
       .then(() => {

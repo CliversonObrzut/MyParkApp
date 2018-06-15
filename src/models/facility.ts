@@ -1,3 +1,6 @@
+/**
+ * Facility Model for Park facilities
+ */
 export class Facility {
     id?: string;
     name?: string;

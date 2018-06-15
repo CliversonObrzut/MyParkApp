@@ -34,12 +34,6 @@ export class ReviewPage {
     console.log(this.park);
   }
 
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad ReviewPage');
-  //   this._preloader.displayPreloader();
-  //   this.loadUserData();
-  // }
-
   ionViewWillEnter(){
     console.log('ionViewWillEnter ReviewPage');
     this._preloader.displayPreloader();
