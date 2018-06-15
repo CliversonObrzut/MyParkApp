@@ -59,7 +59,7 @@ export class RegisterPage {
       dateCreated: this._authService.getUserCreationDate(),
       favouriteParks: new Array<Park>(),
       ratings: new Array<Rating>(),
-      imageURL: "https://firebasestorage.googleapis.com/v0/b/mypark-5778d.appspot.com/o/default_avatar.jpg?alt=media&token=143941e1-520c-46c1-bb53-e7c6aa7e1225"
+      imageURL: "https://firebasestorage.googleapis.com/v0/b/mypark-5778d.appspot.com/o/default_avatar3.jpg?alt=media&token=2e974e1e-d391-4c59-b318-40424150cf59"
     }
     this._dbService.addDocument(this.collection,email,user);
   }
