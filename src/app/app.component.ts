@@ -66,8 +66,9 @@ export class MyApp {
           const authObserver = afAuth.authState.subscribe(user => {
             if (user) {
               // if user is authenticated return Home page
+              console.log(user);
               this.rootPage = HomePage;
-              authObserver.unsubscribe();
+              //authObserver.unsubscribe();
             } else {
               // if user is not authenticated and it is first run, it will return Welcome Screen
               if(this.firstRun === true){
@@ -77,7 +78,7 @@ export class MyApp {
                 // if user is not authenticated and it is not the first run, it will return Login Page
                 this.rootPage = LoginPage;
               }
-              authObserver.unsubscribe();
+              //authObserver.unsubscribe();
             }
           });
 
@@ -137,6 +138,7 @@ export class MyApp {
         this._utilsService.showToast('You have been successfully logged out!');
         console.log("User logged out!");
         this.nav.setRoot(LoginPage);
+        this.firstRun = false;
       })
       .catch(err =>console.log(err))
   }

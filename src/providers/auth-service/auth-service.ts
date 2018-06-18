@@ -13,6 +13,7 @@ import firebase from "firebase";
 @Injectable()
 export class AuthServiceProvider {
 
+  public collection : string;
   private user: Observable<firebase.User>;  
 
   constructor(
@@ -32,6 +33,9 @@ export class AuthServiceProvider {
     return false;
   }
 
+  getAuth() {
+    return this._authService.auth;
+  }
   /**
    * Returns the current user image from Firebase Authentication Service
    */
@@ -51,6 +55,13 @@ export class AuthServiceProvider {
    */
   getUserCreationDate() : string {
     return this._authService.auth.currentUser.metadata.creationTime;
+  }
+
+    /**
+   * Returns the creation date of the current user
+   */
+  getUserName() : string {
+    return this._authService.auth.currentUser.displayName;
   }
 
   /**
@@ -81,11 +92,15 @@ export class AuthServiceProvider {
    * Executes the Login with the given social account provider
    * @param provider 
    */
-  private socialSignIn(provider) {
+  socialSignIn(provider) {
     console.log("social sign in");
     if (this.platform.is('cordova')) { // if running in a IOS or Android device
         console.log("social with cordova");
-        return this._authService.auth.signInWithRedirect(provider); // sign in with redirect
+        this._authService.auth.signInWithRedirect(provider).then(() => {
+            this._authService.auth.getRedirectResult().then(result => {
+              return result;
+            });
+        }); // sign in with redirect
     }
     else {
         // It will work only in browser

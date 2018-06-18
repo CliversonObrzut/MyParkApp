@@ -1,3 +1,5 @@
+import { Rating } from './../../models/rating';
+import { Park } from './../../models/park';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
@@ -29,12 +31,52 @@ export class HomePage {
 
     ionViewDidLoad(){
       this._preloader.displayPreloader();
-      this.getUserData();
+      this.checkParkUser();
       this.getFacilities();
       this.updateSelectedFacilitiesText();
-      this._preloader.hidePreloader();
     }
     
+    checkParkUser() {
+      this._dbService.getDocument("Users", this._authService.getUserEmail())
+      .then(user => {
+        if(!user.exists) {
+          this.createMyParkUser();
+        }
+        else {
+          this.getUserData();
+          this._preloader.hidePreloader();
+        }
+      })
+      .catch(err => {
+        console.log(err.message)});
+    }  
+  
+    createMyParkUser() : void {
+      this.collection = "Users";
+      let email = this._authService.getUserEmail();
+      let username = this._authService.getUserName();
+      let imageURL = this._authService.getUserImage();
+  
+      let user = {
+        email: email,
+        name: username,
+        dateCreated: this._authService.getUserCreationDate(),
+        favouriteParks: new Array<Park>(),
+        userRatings: new Array<Rating>(),
+        imageURL: imageURL
+      }
+      this.addParkUserDb(user, email);
+  
+    }
+  
+    addParkUserDb(user : any, email : any) {
+      this._dbService.addDocument(this.collection,email,user).then(() => {
+        console.log("park user created");
+        this._preloader.hidePreloader();
+        this.getUserData();
+      });
+    }
+
     getUserData() : void {
       this.collection = "Users";
       console.log(this._authService.getUserEmail());
@@ -44,7 +86,9 @@ export class HomePage {
         this.userModel.parseToUserModel(data);
         console.log(this.userModel);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err.message);
+      });
     }
 
     getFacilities() : void {
