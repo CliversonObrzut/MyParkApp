@@ -34,6 +34,7 @@ export class HomePage {
       this.checkParkUser();
       this.getFacilities();
       this.updateSelectedFacilitiesText();
+      this._preloader.hidePreloader();
     }
     
     checkParkUser() {
@@ -43,8 +44,8 @@ export class HomePage {
           this.createMyParkUser();
         }
         else {
-          this.getUserData();
           this._preloader.hidePreloader();
+          this.getUserData();
         }
       })
       .catch(err => {
@@ -72,7 +73,6 @@ export class HomePage {
     addParkUserDb(user : any, email : any) {
       this._dbService.addDocument(this.collection,email,user).then(() => {
         console.log("park user created");
-        this._preloader.hidePreloader();
         this.getUserData();
       });
     }
