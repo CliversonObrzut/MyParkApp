@@ -44,7 +44,6 @@ export class HomePage {
           this.createMyParkUser();
         }
         else {
-          this._preloader.hidePreloader();
           this.getUserData();
         }
       })
